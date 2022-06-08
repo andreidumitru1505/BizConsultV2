@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+      monospace;
+  }
+  
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+  /* base styles */
+  
+  .navbar h1 {
+    color: #031D44;
+    margin-left: 30px;
+   
+  }
+  
+  .navbar .links {
+    margin-left: 30px;
+    font-family: "Quicksand";
+    align-items: end;
+  }
+  
+  
+  .navbar {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-width: 100%;
+    margin: 0 auto;
+    border-bottom: 1px solid #C4D6B0;
+    background-color: #BEEDAA;
+  }

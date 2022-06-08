@@ -1,0 +1,3 @@
+export const ENTREPRENEUR_ROLE = "ENTREPRENEUR";
+export const EXPERT_ADMIN_ROLE = "EXPERT_ADMIN";
+export const SYS_ADMIN_ROLE = "SYS_ADMIN";

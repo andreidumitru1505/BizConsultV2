@@ -53,32 +53,35 @@ async function register(profileData) {
         
         <div>
             <Navbar userInfo={null}/>
-            <div class = "container" style ={{ width: '100%'}}>
-                <div  style ={{width: '32%', marginLeft: '34%', marginRight: '34%'}}> 
-                
-                    <div className="card shadow mb-4 mx-auto text-center" style ={{ marginTop: '5%', backgroundColor: '#BEEDAA',borderRadius:"10px"}}>   
-                        <div className="card-body">
-                            <h4 class="card-title mb-0 border-bottom font-weight-bold" style ={{position: 'relative', top: '10px', left: '16.5%', right: '16.5%', fontSize: '3em'}}> Set up your profile </h4>
+            <h2 class="text-4xl font-bold mt-5">Set up your profile</h2>
+            <div className="max-w-2xl mx-auto bg-white p-16">
+                    <div className="border-2">
+                    <label class="uppercase text-sm font-bold opacity-70">Your Role</label>
+                    <select class="w-full p-3 mt-2 mb-4 w-full bg-slate-200 rounded border-2 border-slate-200 focus:border-slate-600 focus:outline-none" defaultValue={'Expert'} onChange={() => setChangedRole('changed')}>
+                        <option value="">Expert</option>
+                        <option value="">Entrepreneur</option>
+                    </select>
+                    <form onSubmit={handleSubmit}>
+                        <div className="grid gap-6 mb-6 lg:grid-cols-2">
+                            <div>
+                                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
+                                <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required onChange={e => setFirstName(e.target.value)}/>
+                            </div>
+                            <div>
+                                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last name</label>
+                                <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required onChange={e => setLastName(e.target.value)}/>
+                            </div>
                         </div>
-                        <div>
-                            <select style ={{borderRadius:"10px", position: 'relative', left:'10%', height: '40px', width: '100px',fontSize: '15px', textAlign: 'center'}} id="inputState" class="form-select" defaultValue={"Expert"} onChange={() => { setChangedRole("changed") }}>
-                                <option style={{fontSize: '15px'}}>Expert</option>
-                                <option style={{fontSize: '15px'}}>Entrepreneur</option>
+                        <div className="mb-6">
+                            <label for="gender" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Studies</label>
+                            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={e => setExpertField(e.target.value)}>
+                                <option value="Law">Law</option>
+                                <option value="Computer Sciene">Computer Science</option>
+                                <option value="Medicine">Medicine</option>
                             </select>
                         </div>
-                        <form className='form-group' style={{position: 'relative', left:'10%'}} onSubmit={handleSubmit} >
-                            <p></p>
-                            <input style ={{borderRadius:"10px", height: '40px', fontSize: '15px', width: '200px'}} type="text" class="form-control" id="3" placeholder="First Name" onChange={e => setFirstName(e.target.value)}/>
-                            <p></p>
-                            <input style ={{borderRadius:"10px", height: '40px', fontSize: '15px', width: '200px'}} type="text" class="form-control" id="3" placeholder="Last Name" onChange={e => setLastName(e.target.value)}/>
-                            <p></p>
-                            <div style ={{height: '10px', position: 'relative', left: '5%'}}>
-                                <input style ={{borderRadius:"10px", position: 'relative', width: '200px', height: '100px', bottom:'1220%',left: '40%', fontSize:'15px'}} type="text" class="form-control" id="3" placeholder="Expertise" onChange={e => setExpertField(e.target.value)}/>
-                            </div>
-
-                            <button class="btn btn-primary"  style ={{position: 'relative', marginBottom: '5%', width: '150px', height: '40px', left: '27%' ,backgroundColor:"#94AE89", borderColor:"#94AE89", fontFamily:"Quicksand", fontSize: '15px',fontWeight:"bold", borderRadius:"5px", padding:"4px"}}>Submit</button> 
-                        </form>
-                    </div>
+                        <button type="submit" className="text-white mb-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const {body} = require('express-validator');
 
-const {getEntrepreneurs} = require('./controllers/entrepreneursController');
-const {enrolledUserCheck} = require('./controllers/enrolledUserCheck');
-const {submitProfile} = require('./controllers/profileSubmissionController');
+const { getEntrepreneurs } = require('./controllers/entrepreneursController');
+const { enrolledUserCheck } = require('./controllers/enrolledUserCheck');
+const { submitProfile } = require('./controllers/profileSubmissionController');
+const { getRecommendation } = require('./controllers/industryRecommendationController');
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
 
@@ -22,5 +23,11 @@ router.post('/profileSubmission',[
     body('phoneNumber', "Please insert phone number").notEmpty(),
     body('studiesField', "Please insert the field of your studies").notEmpty()
 ], submitProfile);
+
+router.post('/getRecommendation', [
+    body('studies', "Please insert studies").notEmpty(),
+    body('age', 'Please insert age').notEmpty(),
+    body('gender', 'Please insert gender').notEmpty()
+], getRecommendation)
 
 module.exports = router;

@@ -1,26 +1,27 @@
 const {validationResult} = require('express-validator');
 const constants = require('../constants');
+const conn = require('../dbConn').promise();
 
 const STUDIES_MAP = new Map([
-    ['SFTENG', 1],
-    ['BIZADM', 2],
-    ['SOCSCI', 3],
-    ['COMM', 4],
-    ['SCIENG', 5],
-    ['ECON', 6],
-    ['PSY', 3],
-    ['ELENG', 7],
-    ['MARKETING', 8],
-    ['MCHENG', 9],
-    ['ROB', 7],
-    ['MED', 10],
-    ['JOURN', 11],
-    ['FIN', 6],
-    ['TELECOMM', 12],
-    ['LOG', 13],
-    ['TOUR', 14],
-    ['LAW', 15],
-    ['TRANSP', 9]
+    ['Software Engineering', 1],
+    ['Business Administration', 2],
+    ['Social Sciences', 3],
+    ['Commerce', 4],
+    ['Science & Engineering', 5],
+    ['Economics', 6],
+    ['Psychology', 3],
+    ['Electrical Engineering', 7],
+    ['Marketing', 8],
+    ['Mechanical Engineering', 9],
+    ['Robotics', 7],
+    ['Medicine', 10],
+    ['Journalism', 11],
+    ['Finance', 6],
+    ['Telecommunications', 12],
+    ['Logistics', 13],
+    ['Tourism', 14],
+    ['Law', 15],
+    ['Transportation', 9]
 ])
 const INDUSTRY_MAP = new Map([
     [1, 'Artificial intelligence'],
@@ -38,8 +39,8 @@ const INDUSTRY_MAP = new Map([
 ])
 
 const GENDER_MAP = new Map([
-    ['Male', 1],
-    ['Female', 2]
+    ['MALE', 1],
+    ['FEMALE', 2]
 ])
 
 exports.getRecommendation = async(req,res,next) => {
@@ -52,16 +53,20 @@ exports.getRecommendation = async(req,res,next) => {
     }
 
     try{
-        console.log(STUDIES_MAP.get(req.body.studies).toString() + '  Age  '  + req.body.age.toString() + '  Gender ' +  GENDER_MAP.get(req.body.gender).toString())
-        const {spawn} = require("child_process");
-        const pythonProcess = spawn('python3',['../algoML/classificationModelPredict.py', STUDIES_MAP.get(req.body.studies).toString(), req.body.age.toString(), GENDER_MAP.get(req.body.gender).toString()]);
 
-        console.log('sdas');
+        const [entrepreneurSearch] = await conn.execute(
+            "SELECT * FROM `entrepreneurs` WHERE emailAddress=?",[
+                req.body.emailAddress
+        ]);
+
+        console.log(entrepreneurSearch[0].studiesField);
+        const {spawn} = require("child_process");
+        const pythonProcess = spawn('python3',['../algoML/classificationModelPredict.py', STUDIES_MAP.get(entrepreneurSearch[0].studiesField).toString(), entrepreneurSearch[0].age.toString(), GENDER_MAP.get(entrepreneurSearch[0].gender).toString()]);
+
         pythonProcess.stdout.on('data', (data) => {
             let x = `${data}`;
-            console.log(`stdout:` + x);
             res.contentType('application/json');
-            return res.send(JSON.stringify(INDUSTRY_MAP.get(parseInt(x))));
+            return res.send(JSON.stringify(parseInt(x)));
         });
     }
     catch(err){

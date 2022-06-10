@@ -25,9 +25,7 @@ router.post('/profileSubmission',[
 ], submitProfile);
 
 router.post('/getRecommendation', [
-    body('studies', "Please insert studies").notEmpty(),
-    body('age', 'Please insert age').notEmpty(),
-    body('gender', 'Please insert gender').notEmpty()
+    body('emailAddress', "Please insert email address").notEmpty(),
 ], getRecommendation)
 
 module.exports = router;

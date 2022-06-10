@@ -3,6 +3,7 @@ import './App.css';
 import Home from './components/Home';
 import CheckEnrolledUser from './components/CheckEnrolledUser';
 import ProfileSubmission from './components/ProfileSubmission';
+import IndustryRecommendation from './components/IndustryRecommendation';
 
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
@@ -16,6 +17,7 @@ function App() {
                 <Route exact path="/" element = {<CheckEnrolledUser/>}/>
                 <Route exact path="/home" element={<Home/>}/>
                 <Route exact path="/profileSubmission" element = {<ProfileSubmission/>}/>
+                <Route exact path="/industryRecommendation" element = {<IndustryRecommendation/>}/>
             </Routes>
         </div>
     </div>

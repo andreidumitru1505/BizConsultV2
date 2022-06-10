@@ -27,13 +27,13 @@ const Navbar = (props) => {
                         <ul class="flex font-semibold justify-between">
                             <li class="md:px-4 md:py-2 text-indigo-500"> 
                                 <button  onClick={() => navigate("/industryRecommendation",
-                                        {state:{firstName:props.firstName, lastName:props.lastName, email:props.email, role:props.role}})}>
+                                        {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                         Idea generator
                                 </button>
                             </li>
                             <li class="md:px-4 md:py-2 text-indigo-500"> 
                                 <button  onClick={() => navigate("/home",
-                                            {state:{firstName:props.firstName, lastName:props.lastName, email:props.email, role:props.role}})}>
+                                            {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                             Home
                                 </button>
                             </li>
@@ -62,7 +62,7 @@ const Navbar = (props) => {
                             <ul class="flex font-semibold justify-between">
                                 <li class="md:px-4 md:py-2 text-indigo-500"> 
                                     <button  onClick={() => navigate("/home",
-                                                {state:{firstName:props.firstName, lastName:props.lastName, email:props.email, role:props.role}})}>
+                                                {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                                 Home
                                     </button>
                                 </li>
@@ -90,7 +90,7 @@ const Navbar = (props) => {
                             <ul class="flex font-semibold justify-between">
                                 <li class="md:px-4 md:py-2 text-indigo-500"> 
                                     <button  onClick={() => navigate("/home",
-                                                {state:{firstName:props.firstName, lastName:props.lastName, email:props.email, role:props.role}})}>
+                                                {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                                 Home
                                     </button>
                                 </li>

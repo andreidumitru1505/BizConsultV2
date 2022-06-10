@@ -25,7 +25,7 @@ async function register(profileData) {
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     const [age, setAge] = useState();
-    const [gender, setGender] = useState();
+    const [gender, setGender] = useState('MALE');
     const [phoneNumber, setPhoneNumber] = useState();
     const [studiesField, setStudiesField] = useState();
     const role = constants.ENTREPRENEUR_ROLE;

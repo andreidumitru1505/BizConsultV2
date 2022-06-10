@@ -23,7 +23,7 @@ const Home = () => {
             <img className="img" src={homeImage}  style ={{display: "block", display: "flex", justifyContent:"center", alignItems: "center", margin: " 0 auto", borderRadius: "20px"}} />
             </div>
            
-            </div>   
+        </div>   
         
     </>
     )

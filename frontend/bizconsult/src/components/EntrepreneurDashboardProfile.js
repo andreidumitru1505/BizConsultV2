@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
-const EntrepreneurDashboardIdeas = () => {
+const EntrepreneurDashboardProfile = () => {
     const {state} = useLocation();
 
     const [ideas, setIdeas] = useState();
@@ -98,90 +98,96 @@ const EntrepreneurDashboardIdeas = () => {
                     </ul>
                 </aside>
                 <main class="flex-col bg-indigo-50 w-full ml-4 pr-6">
-                <div class="flex p-4 bg-white items-center mt-3 rounded-xl shadow-lg">
-                    <h1 class="text-4xl font-bold text-gray-700">Welcome, {state.firstName}</h1>
-                </div>
-                    <div class="justify-between rounded-xl mt-4 p-4 bg-white shadow-lg">
-                        <section class="container mx-auto p-6 font-mono">
-                            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-                                <div class="w-full overflow-x-auto">
-                                    <h2 class="mb-10 font-mono text-3xl font-bold">Your Ideas</h2>
-                                    <table class="w-full">
-                                        <thead>
-                                            <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                <th class="px-4 py-3">Industry</th>
-                                                <th class="px-4 py-3">Platform Suggestion</th>
-                                                <th class="px-4 py-3">Converted</th>
-                                                <th class="px-4 py-3">Company Name</th>
-                                                <th class="px-4 py-3">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-white">
-                                            {
-                                                ideas.map((item) => (
-                                                    <tr class="text-gray-700">
-                                                        <td class="px-4 py-3 border">
-                                                            <div class=" text-sm">
-                                                                <div>
-                                                                    <p class="font-semibold text-black">{item.industry}</p>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        {
-                                                        item.isPlatformIdea === 0 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border text-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-red-500" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                            </svg>
-                                                        </td>
-                                                        }
-                                                        {
-                                                        item.isPlatformIdea === 1 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border text-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                            </svg>
-                                                        </td>
-                                                        }
-                                                        {
-                                                        item.isConverted === 0 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border text-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-red-500" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
-                                                            </svg>
-                                                        </td>
-                                                        }
-                                                        {
-                                                        item.isConverted === 1 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border text-center">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-green-500" viewBox="0 0 20 20" fill="currentColor">
-                                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                                            </svg>
-                                                        </td>
-                                                        }
-                                                        <td class="px-4 py-3 text-xs font-semibold border">Company Name</td>
-                                                        {item.isConverted === 0 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border">
-                                                            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms" onClick={() => {}}>
-                                                                <span>Convert now</span>
-                                                            </button>
-                                                        </td>
-                                                        }
-                                                        {item.isConverted === 1 &&
-                                                        <td class="px-4 py-3 text-xs font-semibold border">
-                                                            <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms" onClick={() => {}}>
-                                                                <span>See Company</span>
-                                                            </button>
-                                                        </td>
-                                                        }
-                                                    </tr>
-                                                ))
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div class="flex p-4 bg-white items-center mt-3 rounded-xl shadow-lg">
+                        <h1 class="text-4xl font-bold text-gray-700">Check out your awesome profile, {state.firstName}</h1>
+                    </div>
+                    <div class="justify-between w-full mx-auto rounded-xl mt-4 p-4 bg-white shadow-lg">
+                        <div class="bg-gray-100 py-16 px-10 ">
+                            <div class="bg-white p-10 md:w-3/4 lg:w-1/2 mx-auto">
+
+                                <form action="">
+
+                                    <div class="flex items-center mb-5">
+                                        <label for="name" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Text</label>
+                                        <p class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">Mirel</p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Number</label>
+                                        <input type="number" id="number" name="number" placeholder="number" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Range</label>
+                                        <input type="range" id="range" name="range" placeholder="range" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">File</label>
+                                        <input type="file" id="file" name="file" placeholder="file" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Date</label>
+                                        <input type="date" id="date" name="date" placeholder="date" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Month</label>
+                                        <input type="month" id="month" name="month" placeholder="month" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Time</label>
+                                        <input type="time" id="time" name="time" placeholder="time" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Password</label>
+                                        <input type="password" id="password" name="password" placeholder="password" 
+                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none"/>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-20 mr-6 text-right 
+                                                                font-bold text-gray-600">Select</label>
+                                        <select class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">
+                                            <option>Surabaya</option>
+                                            <option>Jakarta</option>
+                                            <option>bandung</option>
+                                            <option>Tangerang</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-right">
+                                        <button class="py-3 px-8 bg-green-400 text-white font-bold">Submit</button> 
+                                    </div>
+                                </form>
                             </div>
-                        </section>
+                        </div>
                     </div>
                 </main>
             </div>          
@@ -191,4 +197,4 @@ const EntrepreneurDashboardIdeas = () => {
 }
 
 
-export default EntrepreneurDashboardIdeas;
+export default EntrepreneurDashboardProfile;

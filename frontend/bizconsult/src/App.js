@@ -10,6 +10,7 @@ import EntrepreneurDashboard from './components/EntrepreneurDashboard';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import EntrepreneurDashboardIdeas from './components/entrepreneurDashboardIdeas';
+import EntrepreneurDashboardProfile from './components/EntrepreneurDashboardProfile';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
                 <Route exact path="/industryRecommendation" element = {<IndustryRecommendation/>}/>
                 <Route exact path="/entrepreneurDashboard" element = {<EntrepreneurDashboard/>}/>
                 <Route exact path="/entrepreneurIdeas" element = {<EntrepreneurDashboardIdeas/>}/>
+                <Route exact path="/entrepreneurProfile" element = {<EntrepreneurDashboardProfile/>}/>
             </Routes>
         </div>
     </div>

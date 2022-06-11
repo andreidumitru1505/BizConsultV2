@@ -53,7 +53,7 @@ router.post('/getEntrepreneurIdeas',[
 
 router.post('/lockInIdea',[
     body('emailAddress', "Please inset email address"),
-    body('industry', "Please insert industry").notEmpty(),
+    body('industryName', "Please insert industry").notEmpty(),
     body('isPlatformIdea', "Please insert isPlatformIdea").notEmpty(),
 ], lockInEntrepreneurIdea)
 

@@ -6,16 +6,24 @@ import Navbar from './Navbar';
 
 const EntrepreneurDashboardProfile = () => {
     const {state} = useLocation();
+    const scienceEngineeringString = 'Science & Engineering';
 
-    const [ideas, setIdeas] = useState();
+    const [profileData, setProfileData] = useState();
     const [isLoading, setIsLoading] = useState(1);
+    const [showModal, setShowModal] = useState(false);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
 
+    const [firstNameUpdate, setFirstNameUpdate] = useState();
+    const [lastNameUpdate, setLastNameUpdate] = useState();
+    const [ageUpdate, setAgeUpdate] = useState();
+    const [genderUpdate, setGenderUpdate] = useState();
+    const [phoneNumberUpdate, setPhoneNumberUpdate] = useState();
+    const [studiesFieldUpdate, setStudiesFieldUpdate] = useState();
+
     useEffect(() => {
-        console.log(state);
-        fetch('http://localhost:8080/getEntrepreneurIdeas',{
+        fetch('http://localhost:8080/getProfileInfo',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -23,7 +31,7 @@ const EntrepreneurDashboardProfile = () => {
             body: JSON.stringify({emailAddress, dummy})
         })
             .then(response => response.json())
-            .then(data => {setIdeas(data);console.log(data); setIsLoading(0)})
+            .then(data => {setProfileData(data[0]);setIsLoading(0)})
 
     }, []);
 
@@ -103,94 +111,140 @@ const EntrepreneurDashboardProfile = () => {
                     </div>
                     <div class="justify-between w-full mx-auto rounded-xl mt-4 p-4 bg-white shadow-lg">
                         <div class="bg-gray-100 py-16 px-10 ">
-                            <div class="bg-white p-10 md:w-3/4 lg:w-1/2 mx-auto">
+                            <div class="bg-white rounded-xl p-10 md:w-3/4 lg:w-1/2 mx-auto">
 
-                                <form action="">
-
+                                <form class="mr-10" action="">
                                     <div class="flex items-center mb-5">
-                                        <label for="name" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Text</label>
-                                        <p class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">First Name</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none">Mirel</p>
+                                                    outline-none">{profileData.firstName}</p>
                                     </div>
                                     <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Number</label>
-                                        <input type="number" id="number" name="number" placeholder="number" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Last Name</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
+                                                    outline-none">{profileData.lastName}</p>
                                     </div>
                                     <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Range</label>
-                                        <input type="range" id="range" name="range" placeholder="range" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Age</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
+                                                    outline-none">{profileData.age} years old</p>
                                     </div>
                                     <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">File</label>
-                                        <input type="file" id="file" name="file" placeholder="file" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Gender</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
+                                                    outline-none">{profileData.gender}</p>
                                     </div>
                                     <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Date</label>
-                                        <input type="date" id="date" name="date" placeholder="date" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Phone Number</label>
+                                        <p type="time" id="time" name="time" placeholder="time" 
+                                            class=" w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
+                                                    outline-none">{profileData.phoneNumber} </p>
                                     </div>
                                     <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Month</label>
-                                        <input type="month" id="month" name="month" placeholder="month" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                        <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Studies</label>
+                                        <p type="time" id="time" name="time" placeholder="time" 
+                                            class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
                                                     text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
+                                                    outline-none">{profileData.studiesField} </p>
                                     </div>
-                                    <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Time</label>
-                                        <input type="time" id="time" name="time" placeholder="time" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                    text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
-                                    </div>
-                                    <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Password</label>
-                                        <input type="password" id="password" name="password" placeholder="password" 
-                                            class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                    text-gray-600 placeholder-gray-400
-                                                    outline-none"/>
-                                    </div>
-                                    <div class="flex items-center mb-5">
-                                        <label for="number" class="inline-block w-20 mr-6 text-right 
-                                                                font-bold text-gray-600">Select</label>
-                                        <select class="flex-1 py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                    text-gray-600 placeholder-gray-400
-                                                    outline-none">
-                                            <option>Surabaya</option>
-                                            <option>Jakarta</option>
-                                            <option>bandung</option>
-                                            <option>Tangerang</option>
-                                        </select>
-                                    </div>
+                                    <>
                                     <div class="text-right">
-                                        <button class="py-3 px-8 bg-green-400 text-white font-bold">Submit</button> 
+                                        <button
+                                            className="bg-pink-500 items-center text-white active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={() => setShowModal(true)}
+                                        >
+                                            Edit your profile
+                                        </button>
                                     </div>
+                                    {showModal ? (
+                                    <>
+                                    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                                        <div className="relative w-1/4 my-6 mx-auto max-w-3xl">
+                                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                                <div className="justify-between border-b border-solid border-slate-200 rounded-t">
+                                                    <button
+                                                        className="p-1 mr-1 mt-0 text-right bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                                        onClick={() => setShowModal(false)}>
+                                                        <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                                        ×
+                                                        </span>
+                                                    </button>
+                                                    <h3 className="text-xl ml-5 p-5 font-semibold">
+                                                        Update your information
+                                                    </h3>
+                                                </div>
+                                                <div class="py-8 px-5 md:px-10 bg-white">
+                                                    <label for="name" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">First Name</label>
+                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.firstName} onChange={e => setFirstNameUpdate(e.target.value)}/>
+                                                    <label for="email2" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Last Name</label>
+                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.lastName} onChange={e => setLastNameUpdate(e.target.value)}/>
+                                                    <label for="expiry" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Age</label>
+                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.age} onChange={e => setAgeUpdate(e.target.value)}/>
+                                                    <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Gender</label>
+                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.gender} onChange={e => setGenderUpdate(e.target.value)}/>
+                                                    <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Phone Number</label>
+                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.phoneNumber} onChange={e => setPhoneNumberUpdate(e.target.value)}/>
+                                                    <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Studies</label>
+                                                    <select class="mb-5 bg-white mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.studiesField} onChange={e => setStudiesFieldUpdate(e.target.value)}>
+                                                        <option value="Law">Law</option>
+                                                        <option value="Computer Sciene">Computer Science</option>
+                                                        <option value="Medicine">Medicine</option>
+                                                        <option value="Software Engineering">Software Engineering</option>
+                                                        <option value="Business Administration">Business Administration</option>
+                                                        <option value="Social Sciences">Social Sciences</option>
+                                                        <option value={scienceEngineeringString}>Science {'&'} Engineering</option>
+                                                        <option value="Psychology">Psychology</option>
+                                                        <option value="Electrical Engineering">Electrical Engineering</option>
+                                                        <option value="Marketing">Marketing</option>
+                                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                                        <option value="Robotics">Robotics</option>
+                                                        <option value="Journalism">Journalism</option>
+                                                        <option value="Telecommunications">Telecommunications</option>
+                                                        <option value="Finance">Finance</option>
+                                                        <option value="Logistics">Logistics</option>
+                                                        <option value="Tourism">Tourism</option>
+                                                        <option value="Transportation">Transportation</option>
+                                                    </select>
+                                                </div>
+                                                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                                    <button
+                                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        type="button"
+                                                        onClick={() => setShowModal(false)}>
+                                                        Close
+                                                    </button>
+                                                    <button
+                                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                        type="button"
+                                                        onClick={() => setShowModal(false)}>
+                                                        Save Changes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                                    </>
+                                ) : null}
+                                </>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </main>
-            </div>          
+            </div>
         </div>
         )
     }

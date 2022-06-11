@@ -6,6 +6,8 @@ import Navbar from './Navbar';
 import * as constants from "../constants";
 import '../index.css'
 
+const scienceEngineeringString = 'Science & Engineering';
+
 async function register(profileData) {
     return fetch('http://localhost:8080/profileSubmission', {
       method: 'POST',
@@ -94,9 +96,24 @@ async function register(profileData) {
                                 <option value="Law">Law</option>
                                 <option value="Computer Sciene">Computer Science</option>
                                 <option value="Medicine">Medicine</option>
+                                <option value="Software Engineering">Software Engineering</option>
+                                <option value="Business Administration">Business Administration</option>
+                                <option value="Social Sciences">Social Sciences</option>
+                                <option value={scienceEngineeringString}>Science {'&'} Engineering</option>
+                                <option value="Psychology">Psychology</option>
+                                <option value="Electrical Engineering">Electrical Engineering</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                <option value="Robotics">Robotics</option>
+                                <option value="Journalism">Journalism</option>
+                                <option value="Telecommunications">Telecommunications</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Logistics">Logistics</option>
+                                <option value="Tourism">Tourism</option>
+                                <option value="Transportation">Transportation</option>
                             </select>
                         </div>
-                        <button type="submit" className="text-white mb-6 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                        <button type="submit" className="text-white mb-6 bg-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                     </form>
                 </div>
             </div>

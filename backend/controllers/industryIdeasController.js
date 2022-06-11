@@ -78,7 +78,7 @@ exports.lockInEntrepreneurIdea = async (req, res, next) => {
         const [newIdea] = await conn.execute(
             'INSERT INTO `industryIdeas` (`entrepreneurId`, `industry`, `isConverted`, `isPlatformIdea`) VALUES (?,?,?,?)',[
                 entrepreneur[0].id,
-                req.body.industry,
+                req.body.industryName,
                 false,
                 req.body.isPlatformIdea
             ]

@@ -6,6 +6,7 @@ const { enrolledUserCheck } = require('./controllers/enrolledUserCheck');
 const { submitProfile } = require('./controllers/profileSubmissionController');
 const { getRecommendation } = require('./controllers/industryRecommendationController');
 const { insertCompany } = require('./controllers/companiesController')
+const { getEntrepreneurIdeas } = require('./controllers/industryIdeasController')
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
 
@@ -45,5 +46,9 @@ router.post('/insertCompany',[
 router.post('/getDashboardInfo',[
     body('emailAddress', "Please inset email address")
 ], getDashboardInfo)
+
+router.post('/getEntrepreneurIdeas',[
+    body('emailAddress', "Please inset email address")
+], getEntrepreneurIdeas)
 
 module.exports = router;

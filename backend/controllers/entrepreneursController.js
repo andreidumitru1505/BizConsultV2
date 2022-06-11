@@ -14,6 +14,44 @@ exports.getEntrepreneurs = async (req,res,next) => {
     }
 }
 
+exports.getProfileInfo = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [entrepreneur] = await conn.execute(
+            'SELECT * FROM `entrepreneurs` WHERE emailAddress=?',[
+                req.body.emailAddress
+        ])
+
+        var response = [];
+
+        response.push({
+            firstName: entrepreneur[0].firstName,
+            lastName: entrepreneur[0].lastName,
+            age: entrepreneur[0].age,
+            gender: entrepreneur[0].gender,
+            phoneNumber: entrepreneur[0].phoneNumber,
+            studiesField: entrepreneur[0].studiesField
+        })
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+
 exports.getDashboardInfo = async (req, res, next) => {
 
     const errors = validationResult(req);

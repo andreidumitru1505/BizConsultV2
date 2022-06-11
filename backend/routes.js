@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {body} = require('express-validator');
 
-const { getEntrepreneurs } = require('./controllers/entrepreneursController');
+const { getEntrepreneurs, getDashboardInfo } = require('./controllers/entrepreneursController');
 const { enrolledUserCheck } = require('./controllers/enrolledUserCheck');
 const { submitProfile } = require('./controllers/profileSubmissionController');
 const { getRecommendation } = require('./controllers/industryRecommendationController');
@@ -31,15 +31,19 @@ router.post('/getRecommendation', [
 
 router.post('/insertCompany',[
     body('emailAddress', "Please insert email address").notEmpty(),
-    body('industry', 'Please insert last name').notEmpty(),
-    body('description', "Please insert email address").notEmpty(),
-    body('website', "Please field of expertise").notEmpty(),
-    body('value', "Invalid Role").notEmpty(),
-    body('cif', "Please insert age").notEmpty(),
-    body('size', "Please insert gender").notEmpty(),
-    body('mainLocationCity', "Please insert phone number").notEmpty(),
-    body('mainLocationCountry', "Please insert the field of your studies").notEmpty(),
+    body('industry', 'Please insert industry').notEmpty(),
+    body('description', "Please insert description").notEmpty(),
+    body('website', "Please insert website").notEmpty(),
+    body('value', "Please insert value").notEmpty(),
+    body('cif', "Please insert cif").notEmpty(),
+    body('size', "Please insert size").notEmpty(),
+    body('mainLocationCity', "Please insert main Location City").notEmpty(),
+    body('mainLocationCountry', "Please insert main Location Country").notEmpty(),
     body('foundedDate')
 ], insertCompany)
+
+router.post('/getDashboardInfo',[
+    body('emailAddress', "Please inset email address")
+], getDashboardInfo)
 
 module.exports = router;

@@ -32,6 +32,12 @@ const Navbar = (props) => {
                                 </button>
                             </li>
                             <li class="md:px-4 md:py-2 text-indigo-500"> 
+                                <button  onClick={() => navigate("/entrepreneurDashboard",
+                                        {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
+                                        Dashboard
+                                </button>
+                            </li>
+                            <li class="md:px-4 md:py-2 text-indigo-500"> 
                                 <button  onClick={() => navigate("/home",
                                             {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                             Home

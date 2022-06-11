@@ -26,8 +26,6 @@ exports.getEntrepreneurIdeas = async (req, res, next) => {
         )
 
         var response = [];
-        var  earnings = 0;
-        var  companiesNo = 0;
 
         for(var i = 0; i < ideas.length; i++){
             var companyName = '', companyId = '';
@@ -54,6 +52,47 @@ exports.getEntrepreneurIdeas = async (req, res, next) => {
         res.contentType('application/json')
         return res.send(JSON.stringify(response));
 
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+exports.lockInEntrepreneurIdea = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [entrepreneur] = await conn.execute(
+            'SELECT * FROM `entrepreneurs` WHERE emailAddress=?',[
+                req.body.emailAddress
+        ])
+
+        const [newIdea] = await conn.execute(
+            'INSERT INTO `industryIdeas` (`entrepreneurId`, `industry`, `isConverted`, `isPlatformIdea`) VALUES (?,?,?,?)',[
+                entrepreneur[0].id,
+                req.body.industry,
+                false,
+                req.body.isPlatformIdea
+            ]
+        )
+
+        if(newIdea.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed to lock in idea!'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Idea locked in!'
+        })
     }
     catch(err){
         next(err);

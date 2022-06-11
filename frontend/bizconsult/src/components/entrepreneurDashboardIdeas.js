@@ -23,7 +23,7 @@ const EntrepreneurDashboardIdeas = () => {
             body: JSON.stringify({emailAddress, dummy})
         })
             .then(response => response.json())
-            .then(data => {setIdeas(data);console.log(ideas); setIsLoading(0)})
+            .then(data => {setIdeas(data);console.log(data); setIsLoading(0)})
 
     }, []);
 
@@ -124,7 +124,7 @@ const EntrepreneurDashboardIdeas = () => {
                                                             </div>
                                                         </td>
                                                         {
-                                                        !item.isPlatformIdea &&
+                                                        item.isPlatformIdea === 0 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border text-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-red-500" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
@@ -132,7 +132,7 @@ const EntrepreneurDashboardIdeas = () => {
                                                         </td>
                                                         }
                                                         {
-                                                        item.isPlatformIdea &&
+                                                        item.isPlatformIdea === 1 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border text-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-green-500" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -140,7 +140,7 @@ const EntrepreneurDashboardIdeas = () => {
                                                         </td>
                                                         }
                                                         {
-                                                        !item.isConverted &&
+                                                        item.isConverted === 0 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border text-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-red-500" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
@@ -148,7 +148,7 @@ const EntrepreneurDashboardIdeas = () => {
                                                         </td>
                                                         }
                                                         {
-                                                        item.isConverted &&
+                                                        item.isConverted === 1 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border text-center">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mx-auto fill-green-500" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
@@ -156,14 +156,14 @@ const EntrepreneurDashboardIdeas = () => {
                                                         </td>
                                                         }
                                                         <td class="px-4 py-3 text-xs font-semibold border">Company Name</td>
-                                                        {!item.isConverted &&
+                                                        {item.isConverted === 0 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border">
                                                             <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms" onClick={() => {}}>
                                                                 <span>Convert now</span>
                                                             </button>
                                                         </td>
                                                         }
-                                                        {item.isConverted &&
+                                                        {item.isConverted === 1 &&
                                                         <td class="px-4 py-3 text-xs font-semibold border">
                                                             <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms" onClick={() => {}}>
                                                                 <span>See Company</span>

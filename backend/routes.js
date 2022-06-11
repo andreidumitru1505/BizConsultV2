@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const {body} = require('express-validator');
 
-const { getEntrepreneurs, getDashboardInfo } = require('./controllers/entrepreneursController');
+const { getEntrepreneurs, getDashboardInfo, getProfileInfo } = require('./controllers/entrepreneursController');
 const { enrolledUserCheck } = require('./controllers/enrolledUserCheck');
 const { submitProfile } = require('./controllers/profileSubmissionController');
 const { getRecommendation } = require('./controllers/industryRecommendationController');
@@ -56,5 +56,9 @@ router.post('/lockInIdea',[
     body('industryName', "Please insert industry").notEmpty(),
     body('isPlatformIdea', "Please insert isPlatformIdea").notEmpty(),
 ], lockInEntrepreneurIdea)
+
+router.post('/getProfileInfo',[
+    body('emailAddress', "Please inset email address")
+], getProfileInfo)
 
 module.exports = router;

@@ -44,6 +44,7 @@ async function lockInIdea(ideaData) {
       .then(data => data.json())
 }
 
+
 const IndustryRecommendation = () => {
 
     const {state} = useLocation();
@@ -53,22 +54,23 @@ const IndustryRecommendation = () => {
     const [seeMoreOptions, setSeeMoreOptions] = useState(0);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
-    const [isPlatformIdea, setIsPlatformIdea] = useState(0);
+    var isPlatformIdea = 0;
     const navigate = useNavigate();
 
     const handleLockIn = async e => {
         var industryName = industry.name;
-        if(industry.name === recommendedIndustry){
-            setIsPlatformIdea(1);
+        if(industryName == recommendedIndustry){
+            isPlatformIdea = 1
         }
         e.preventDefault();
-          await lockInIdea({
+        await lockInIdea({
               emailAddress,
               industryName,
               isPlatformIdea
             });
             navigate('/entrepreneurDashboard', {state:{firstName: state.firstName, lastName: state.lastName, emailAddress:state.emailAddress, role: state.role}});
     }
+
 
     useEffect(() => {
         fetch('http://localhost:8080/getRecommendation',{
@@ -79,7 +81,7 @@ const IndustryRecommendation = () => {
             body: JSON.stringify({emailAddress, dummy})
         })
             .then(response => response.json())
-            .then(data => {setIndustry(industriesMap.get(data));setRecommendedIndustry(industry.name); setIsLoading(0)})
+            .then(data => {setIndustry(industriesMap.get(data));setRecommendedIndustry(industriesMap.get(data).name); setIsLoading(0)})
 
     }, []);
 
@@ -124,7 +126,7 @@ const IndustryRecommendation = () => {
                                 <div class="mb-12 space-y-4">
                                     <h3 class="text-2xl font-semibold text-indigo-500">{industry.name}</h3>
                                     <p class="mb-6 text-grey-500">{industry.description}</p>
-                                    <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl text-xl items-center gap-2" onClick={() => handleLockIn()}>
+                                    <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl text-xl items-center gap-2" onClick={handleLockIn}>
                                             <span>Lock in Idea</span>
                                     </button>
                                 </div>
@@ -168,7 +170,7 @@ const IndustryRecommendation = () => {
                                 <div class="mb-12 space-y-4">
                                     <h3 class="text-2xl font-semibold text-indigo-500">{industry.name}</h3>
                                     <p class="mb-6 text-grey-500">{industry.description}</p>
-                                    <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl text-xl items-center gap-2" onClick={() => handleLockIn()}>
+                                    <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl text-xl items-center gap-2" onClick={handleLockIn}>
                                             <span>Lock in Idea</span>
                                     </button>
                                 </div>

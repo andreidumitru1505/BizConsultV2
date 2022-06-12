@@ -117,6 +117,7 @@ exports.getDashboardInfo = async (req, res, next) => {
             }
 
             companiesList.push({
+                name: companies[i].name,
                 companyId: companies[i].id,
                 industry: companies[i].industry,
                 size: companies[i].size,

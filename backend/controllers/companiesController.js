@@ -48,7 +48,7 @@ exports.insertCompany = async(req,res,next) => {
         const [newApplication] = await conn.execute(
             "INSERT INTO `applications` (`companyId`, `status`) VALUES (?,?)",[
                 newCompanyId[0].id,
-                'AWAITING REVIEW'
+                'Awaiting Review'
             ]
         )
 

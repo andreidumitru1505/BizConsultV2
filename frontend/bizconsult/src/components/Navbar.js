@@ -67,6 +67,12 @@ const Navbar = (props) => {
                         <div class="text-gray-500 order-3 w-full md:w-auto md:order-2">
                             <ul class="flex font-semibold justify-between">
                                 <li class="md:px-4 md:py-2 text-indigo-500"> 
+                                    <button  onClick={() => navigate("/expertDashboard",
+                                            {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
+                                            Dashboard
+                                    </button>
+                                </li>
+                                <li class="md:px-4 md:py-2 text-indigo-500"> 
                                     <button  onClick={() => navigate("/home",
                                                 {state:{firstName:props.firstName, lastName:props.lastName, emailAddress:props.emailAddress, role:props.role}})}>
                                                 Home

@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
-const EntrepreneurDashboard = () => {
+const ExpertDashboard = () => {
     const {state} = useLocation();
 
     const [entrepreneurInfo, setEntrepreneurInfo] = useState();
@@ -179,4 +179,4 @@ const EntrepreneurDashboard = () => {
 }
 
 
-export default EntrepreneurDashboard;
+export default ExpertDashboard;

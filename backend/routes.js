@@ -40,6 +40,10 @@ router.post('/insertCompany',[
     body('size', "Please insert size").notEmpty(),
     body('mainLocationCity', "Please insert main Location City").notEmpty(),
     body('mainLocationCountry', "Please insert main Location Country").notEmpty(),
+    body('name', "Please insert name").notEmpty(),
+    body('isPlatformRecommendation', "Insert isPlatformRecommendation").notEmpty(),
+    body('isIdeaGenerated', "Insert isIdeaGenerated").notEmpty(),
+    body('industryIdeaId'),
     body('foundedDate')
 ], insertCompany)
 

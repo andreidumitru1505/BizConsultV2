@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 const ExpertDashboard = () => {
     const {state} = useLocation();
 
-    const [entrepreneurInfo, setEntrepreneurInfo] = useState();
+    const [expertInfo, setExpertInfo] = useState();
     const [isLoading, setIsLoading] = useState(1);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
@@ -15,7 +15,7 @@ const ExpertDashboard = () => {
 
     useEffect(() => {
         console.log(state);
-        fetch('http://localhost:8080/getDashboardInfo',{
+        fetch('http://localhost:8080/getExpertDashboardInfo',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const ExpertDashboard = () => {
             body: JSON.stringify({emailAddress, dummy})
         })
             .then(response => response.json())
-            .then(data => {setEntrepreneurInfo(data[0]);console.log(data);setIsLoading(0)})
+            .then(data => {setExpertInfo(data[0]);setIsLoading(0)})
 
     }, []);
 
@@ -92,83 +92,33 @@ const ExpertDashboard = () => {
                     </div>
                         <div class="flex justify-between mt-4 space-x-4 s">
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-indigo-500" fill="none" viewBox="0 0 24 24" height="100px" width="100px" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                </svg>               
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                                </svg>            
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">{entrepreneurInfo.companiesNo}</h1>
-                                    <span class="text-gray-500">Companies Integrated</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{expertInfo.openApplications}</h1>
+                                    <span class="text-gray-500">Open Applications</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                                 </svg>
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">{entrepreneurInfo.ideasNo}</h1>
-                                    <span class="text-gray-500">Ideas Generated</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{expertInfo.underReviewApplications}</h1>
+                                    <span class="text-gray-500">Under Review Applications</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-indigo-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                 </svg>
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">{entrepreneurInfo.earnings}</h1>
-                                    <span class="text-gray-500">Profit</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{expertInfo.solvedApplications}</h1>
+                                    <span class="text-gray-500">Solved Application</span>
                                 </div>
                             </div>
-                        </div>
-                        <div class="justify-between rounded-xl mt-4 p-4 bg-white shadow-lg">
-                            <section class="container mx-auto p-6 font-mono">
-                                <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-                                    <div class="w-full overflow-x-auto">
-                                        <h2 class="mb-10 font-mono text-3xl font-bold">Your Companies overview</h2>
-                                        <table class="w-full">
-                                            <thead>
-                                                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                    <th class="px-4 py-3">Name</th>
-                                                    <th class="px-4 py-3">Industry</th>
-                                                    <th class="px-4 py-3">Size</th>
-                                                    <th class="px-4 py-3">Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="bg-white">
-                                                {
-                                                    entrepreneurInfo.companies.map((item) => (
-                                                        <tr class="text-gray-700">
-                                                            <td class="px-4 py-3 border">
-                                                                <div class="text-sm">
-                                                                    <div>
-                                                                        <p class="font-semibold text-black">{item.name}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="px-4 py-3 text-xs font-semibold border">{item.industry}</td>
-                                                            <td class="px-4 py-3 text-xs font-semibold border">{item.size}</td>
-                                                            {item.status === 'Active' ?
-                                                                <td class="px-4 py-3 text-xs border">
-                                                                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-200 rounded-sm"> {item.status} </span>
-                                                                </td>
-                                                                :
-                                                                (item.status === 'Under Review' || item.status === 'Awaiting Review') ?
-                                                                <td class="px-4 py-3 text-xs border">
-                                                                    <span class="px-2 py-1 font-semibold leading-tight text-grey-700 bg-gray-200 rounded-sm"> {item.status} </span>
-                                                                </td>
-                                                                :
-                                                                <td class="px-4 py-3 text-xs border">
-                                                                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-red-100 rounded-sm"> {item.status} </span>
-                                                                </td>
-                                                            }
-                                                        </tr>
-                                                    ))
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </section>
                         </div>
                     </main>
                 </div>

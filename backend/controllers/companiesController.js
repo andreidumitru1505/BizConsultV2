@@ -35,8 +35,8 @@ exports.insertCompany = async(req,res,next) => {
                 continue;
             }
             if(industryIdeas[i].industry === req.body.industry){
-                isPlatformGenerated = true;
-                isIdeaGenerated = industryIdeas[i].isPlatformIdea;
+                isIdeaGenerated = true;
+                isPlatformRecommendation = industryIdeas[i].isPlatformIdea;
                 break;
             }
         }
@@ -44,8 +44,9 @@ exports.insertCompany = async(req,res,next) => {
         foundedDate = req.body.foundedDate ? req.bodyFoundedDate : new Date();
 
         const [newCompany] = await conn.execute(
-            "INSERT INTO `companies` (`entrepreneurId`, `industry`, `description`, `website`, `value`, `cif`, `size`, `isActive`, `isPlatformGenerated`, `isIdeaGenerated`, `mainLocationCity`, `mainLocationCountry`, `foundedDate`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",[
+            "INSERT INTO `companies` (`entrepreneurId`, `name`, `industry`, `description`, `website`, `value`, `cif`, `size`, `isActive`, `isPlatformRecommendation`, `isIdeaGenerated`, `mainLocationCity`, `mainLocationCountry`, `foundedDate`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",[
                 entrepreneur[0].id,
+                req.body.name,
                 req.body.industry,
                 req.body.description,
                 req.body.website,
@@ -53,7 +54,7 @@ exports.insertCompany = async(req,res,next) => {
                 req.body.cif,
                 req.body.size,
                 true,
-                isPlatformGenerated,
+                isPlatformRecommendation,
                 isIdeaGenerated,
                 req.body.mainLocationCity,
                 req.body.mainLocationCountry,

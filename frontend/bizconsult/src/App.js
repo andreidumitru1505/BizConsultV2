@@ -11,6 +11,7 @@ import EntrepreneurDashboard from './components/EntrepreneurDashboard';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import EntrepreneurDashboardIdeas from './components/entrepreneurDashboardIdeas';
 import EntrepreneurDashboardProfile from './components/EntrepreneurDashboardProfile';
+import EntrepreneurDashboardRegisterCompany from './components/EntrepreneurDashboardRegisterCompany';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                 <Route exact path="/entrepreneurDashboard" element = {<EntrepreneurDashboard/>}/>
                 <Route exact path="/entrepreneurIdeas" element = {<EntrepreneurDashboardIdeas/>}/>
                 <Route exact path="/entrepreneurProfile" element = {<EntrepreneurDashboardProfile/>}/>
+                <Route exact path="/registerCompany" element = {<EntrepreneurDashboardRegisterCompany/>}/>
             </Routes>
         </div>
     </div>

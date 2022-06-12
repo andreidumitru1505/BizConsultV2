@@ -140,3 +140,75 @@ exports.getDashboardInfo = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.updateProfileInfo = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+        if(req.body.firstNameUpdate){
+            const [updateFirstName] = await conn.execute(
+                'UPDATE `entrepreneurs` SET firstName=? WHERE emailAddress=?',[
+                    req.body.firstNameUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+        if(req.body.lastNameUpdate){
+            const [updateLastName] = await conn.execute(
+                'UPDATE `entrepreneurs` SET lastName=? WHERE emailAddress=?',[
+                    req.body.lastNameUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+        if(req.body.ageUpdate){
+            const [updateAge] = await conn.execute(
+                'UPDATE `entrepreneurs` SET age=? WHERE emailAddress=?',[
+                    req.body.ageUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+        if(req.body.genderUpdate){
+            const [updateGender] = await conn.execute(
+                'UPDATE `entrepreneurs` SET gender=? WHERE emailAddress=?',[
+                    req.body.genderUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+        if(req.body.phoneNumberUpdate){
+            const [updatePhoneNumber] = await conn.execute(
+                'UPDATE `entrepreneurs` SET phoneNumber=? WHERE emailAddress=?',[
+                    req.body.phoneNumberUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+        if(req.body.studiesFieldUpdate){
+            const [updateStudiesField] = await conn.execute(
+                'UPDATE `entrepreneurs` SET studiesField=? WHERE emailAddress=?',[
+                    req.body.studiesFieldUpdate,
+                    req.body.emailAddress
+                ]
+            )
+        }
+
+
+        return res.status(201).json({
+            message: "Profile updated!"
+        })
+
+    }
+    catch(err){
+        next(err);
+    }
+}
+

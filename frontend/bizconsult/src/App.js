@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import EntrepreneurDashboardIdeas from './components/entrepreneurDashboardIdeas';
 import EntrepreneurDashboardProfile from './components/EntrepreneurDashboardProfile';
 import EntrepreneurDashboardRegisterCompany from './components/EntrepreneurDashboardRegisterCompany';
+import ExpertDashboard from './components/ExpertDashboard';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                 <Route exact path="/entrepreneurIdeas" element = {<EntrepreneurDashboardIdeas/>}/>
                 <Route exact path="/entrepreneurProfile" element = {<EntrepreneurDashboardProfile/>}/>
                 <Route exact path="/registerCompany" element = {<EntrepreneurDashboardRegisterCompany/>}/>
+                <Route exact path="/expertDashboard" element = {<ExpertDashboard/>}/>
             </Routes>
         </div>
     </div>

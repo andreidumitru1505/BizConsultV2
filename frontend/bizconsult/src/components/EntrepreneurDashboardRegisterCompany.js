@@ -64,6 +64,8 @@ const EntrepreneurDashboardRegisterCompany = () => {
               foundedDate,
               industryIdeaId
             });
+            navigate("/entrepreneurDashboard",
+            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role}})
     }
 
     return (
@@ -138,7 +140,6 @@ const EntrepreneurDashboardRegisterCompany = () => {
                                                                 <option value={autoTransportationString}>Auto {'&'} transportation</option>
                                                                 <option value="Edtech">Edtech</option>
                                                                 <option value="Internet Services">Internet Services</option>
-                                                                <option value="Social Sciences">Social Sciences</option>
                                                                 <option value='Fintech'>Fintech</option>
                                                                 <option value="Hardware">Hardware</option>
                                                                 <option value="Health">Health</option>

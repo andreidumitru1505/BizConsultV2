@@ -20,6 +20,11 @@ async function register(profileData) {
   
     const {user} = useAuth0();
 
+    const autoTransportationString = 'Auto & transportation';
+    const logisticsString = 'Supply chain, logistics, & delivery';
+    const retailString = "Consumer & retail";
+    const ecommerceString = "E-commerce & direct-to-consumer";
+
     const emailAddress = user.email;
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
@@ -64,20 +69,29 @@ async function register(profileData) {
                     <form onSubmit={handleSubmit}>
                         <div className="grid gap-6 mb-6 lg:grid-cols-2">
                             <div>
-                                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First name</label>
+                                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">First Name</label>
                                 <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John" required onChange={e => setFirstName(e.target.value)}/>
                             </div>
                             <div>
-                                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last name</label>
+                                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Last Name</label>
                                 <input type="text" id="last_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Doe" required onChange={e => setLastName(e.target.value)}/>
                             </div>
                         </div>
                         <div className="mb-6">
-                            <label for="gender" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Studies</label>
+                            <label for="gender" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Expert Field</label>
                             <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={e => setExpertField(e.target.value)}>
-                                <option value="Law">Law</option>
-                                <option value="Computer Sciene">Computer Science</option>
-                                <option value="Medicine">Medicine</option>
+                                <option value="Artificial intelligence">Artificial intelligence</option>
+                                <option value={autoTransportationString}>Auto {'&'} transportation</option>
+                                <option value="Edtech">Edtech</option>
+                                <option value="Internet Services">Internet Services</option>
+                                <option value='Fintech'>Fintech</option>
+                                <option value="Hardware">Hardware</option>
+                                <option value="Health">Health</option>
+                                <option value={logisticsString}>Supply chain, logistics, {'&'} delivery</option>
+                                <option value={retailString}>Consumer {'&'} retail</option>
+                                <option value={ecommerceString}>E-commerce {'&'} direct-to-consumer</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Law Consultation">Law Consultation</option>
                             </select>
                         </div>
                         <button type="submit" className="text-white mb-6 bg-indigo-500 hover:bg-indigo-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>

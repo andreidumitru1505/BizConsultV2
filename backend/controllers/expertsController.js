@@ -57,7 +57,7 @@ exports.getExpertDashboardInfo = async (req, res, next) => {
 
         response.push({
             openApplications: openApplications,
-            undeReviewApplications: expertUnderReviewApplications.length,
+            underReviewApplications: expertUnderReviewApplications.length,
             solvedApplications: expertSolvedApplications.length
         })
 

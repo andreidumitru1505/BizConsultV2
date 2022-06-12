@@ -135,7 +135,7 @@ const EntrepreneurDashboardProfile = () => {
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
                             </svg>
                             <button  onClick={() => navigate("/registerCompany",
-                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role}})}>
+                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, isIdeaGenerated: 0, isPlatformRecommendation: 0, industryIdeaId: -1, industry: ''}})}>
                                             Company
                             </button>
                         </li>

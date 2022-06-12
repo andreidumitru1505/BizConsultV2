@@ -32,6 +32,7 @@ exports.insertCompany = async(req,res,next) => {
                 req.body.value,
                 req.body.cif,
                 req.body.size,
+                true,
                 req.body.isPlatformRecommendation,
                 req.body.isIdeaGenerated,
                 req.body.mainLocationCity,
@@ -78,6 +79,7 @@ exports.insertCompany = async(req,res,next) => {
 
     }
     catch(err){
+        console.log(err);
         next(err);
     }
 }

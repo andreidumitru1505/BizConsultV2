@@ -4,34 +4,67 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
+async function registerCompany(companyData) {
+    return fetch('http://localhost:8080/insertCompany', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(companyData)
+    })
+      .then(data => data.json())
+   }
+
 const EntrepreneurDashboardRegisterCompany = () => {
     const {state} = useLocation();
-    const scienceEngineeringString = 'Science & Engineering';
     const autoTransportationString = 'Auto & transportation';
     const logisticsString = 'Supply chain, logistics, & delivery';
     const retailString = "Consumer & retail";
     const ecommerceString = "E-commerce & direct-to-consumer";
 
-    const [profileData, setProfileData] = useState();
-    const [isLoading, setIsLoading] = useState(1);
-    const [showModal, setShowModal] = useState(false);
-    const [refresh, setRefresh] = useState(0);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
 
     const [name, setName] = useState();
-    const [industry, setIndustry] = useState();
+    const [industry, setIndustry] = useState(state.industry);
     const [cif, setCif] = useState();
     const [description, setDescription] = useState();
     const [website, setWebsite] = useState();
     const [value, setValue] = useState();
-    const [size, setSize] = useState();
-    const [isPlatformRecommendation, setIsPlatformRecommendation] = useState();
-    const [isIdeaGenerated, setIsIdeaGenerated] = useState();
+    const [size, setSize] = useState('Microenterprise');
     const [mainLocationCity, setMainLocationCity] = useState();
     const [mainLocationCountry, setMainLocationCountry] = useState();
     const [foundedDate, setFoundedDate] = useState();
+
+    const handleRegisterCompany = async e => {
+        var isPlatformRecommendation = state.isPlatformRecommendation;
+        var isIdeaGenerated = state.isIdeaGenerated;
+        var industryIdeaId = state.industryIdeaId;
+        console.log(industry);
+        if(industry !== state.industry){
+            isIdeaGenerated = 0;
+            isPlatformRecommendation = 0;
+        }
+
+        e.preventDefault();
+          await registerCompany({
+              emailAddress,
+              name,
+              industry,
+              cif,
+              description,
+              website,
+              value,
+              size,
+              isPlatformRecommendation,
+              isIdeaGenerated,
+              mainLocationCity,
+              mainLocationCountry,
+              foundedDate,
+              industryIdeaId
+            });
+    }
 
     return (
         <div>
@@ -95,12 +128,12 @@ const EntrepreneurDashboardRegisterCompany = () => {
                                 <div class="max-w-2xl mx-auto text-left">
                                     <form>
                                         <div class="relative z-0 mb-6 w-full group">
-                                            <input type="text" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                                            <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" onChange={e => setName(e.target.value)}>Company Name</label>
+                                            <input type="text" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setName(e.target.value)}/>
+                                            <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company Name</label>
                                         </div>
                                         <div class="relative z-0 mb-6 w-full group">
                                             <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Industry</label>
-                                            <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" onChange={e => setIndustry(e.target.value)}>
+                                            <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" defaultValue={state.isIdeaGenerated ? state.industry : 'ArtificialIntelligence'} onChange={e => setIndustry(e.target.value)}>
                                                                 <option value="Artificial intelligence">Artificial intelligence</option>
                                                                 <option value={autoTransportationString}>Auto {'&'} transportation</option>
                                                                 <option value="Edtech">Edtech</option>
@@ -116,14 +149,18 @@ const EntrepreneurDashboardRegisterCompany = () => {
                                                                 <option value="Law Consultation">Law Consultation</option>
                                             </select>
                                         </div>
+                                        <div class="relative z-0 mb-6 w-full group">
+                                            <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Website</label>
+                                            <input type="text" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setWebsite(e.target.value)}/>
+                                        </div>
                                         <div class="grid xl:grid-cols-2 xl:gap-6">
                                             <div class="relative z-0 mb-6 w-full group">
                                                 <input type="text" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setCif(e.target.value)}/>
                                                 <label for="floating_repeat_password" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CIF/CUI</label>
                                             </div>
                                             <div class="relative z-0 mb-6 w-full group">
-                                                <input type="text" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setWebsite(e.target.value)}/>
-                                                <label for="floating_repeat_password" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Website</label>
+                                                <input type="text" name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setValue(e.target.value)}/>
+                                                <label for="floating_repeat_password" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Value (RON)</label>
                                             </div>
                                         </div>
                                         <div class="grid xl:grid-cols-2 xl:gap-6">
@@ -139,8 +176,8 @@ const EntrepreneurDashboardRegisterCompany = () => {
                                         <div class="grid xl:grid-cols-2 xl:gap-6">
                                             <div class="relative z-0 mb-6 w-full group">
                                                 <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Company Size</label>
-                                                <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" onChange={e => setSize(e.target.value)}>
-                                                                    <option value="Microentreprise">Microentreprise (1 to 9 employees)</option>
+                                                <select class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" defaultValue={'Microenterprise'} onChange={e => setSize(e.target.value)}>
+                                                                    <option value="Microenterprise">Microenterprise (1 to 9 employees)</option>
                                                                     <option value="Small enterprise">Small enterprise (10 to 49 employees)</option>
                                                                     <option value="Medium-sized enterprise">Medium-sized enterprise (50 to 249 employees)</option>
                                                                     <option value="Large enterprise">Large enterprise (250 employees or more)</option>
@@ -151,12 +188,14 @@ const EntrepreneurDashboardRegisterCompany = () => {
                                                 <label for="floating_last_name" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Founded Date</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                        <div class="relative z-0 mb-6 w-full group">
+                                            <textarea type="text" rows="2" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required onChange={e => setDescription(e.target.value)}/>
+                                            <label for="floating_email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+                                        </div>
+                                        <button class="flex px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl text-center mx-auto items-center gap-2" onClick={handleRegisterCompany}>
+                                            <span>Submit</span>
+                                        </button>                
                                     </form>
-
-                                    <p class="mt-5">Check out the original floating label form elements on <a class="text-blue-600 hover:underline"
-                                            href="https://flowbite.com/docs/components/forms/#floating-labels" target="_blank">Flowbite</a> and browse other similar components built with Tailwind CSS.
-                                    </p>
                                 </div>
                             </div>
                         </div>

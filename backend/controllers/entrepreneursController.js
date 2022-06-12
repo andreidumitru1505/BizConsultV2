@@ -129,7 +129,8 @@ exports.getDashboardInfo = async (req, res, next) => {
             companiesNo: companiesNo,
             ideasNo: ideas.length,
             earnings: earnings,
-            companies: companiesList
+            companies: companiesList,
+            status
         })
 
         res.contentType('application/json')
@@ -137,6 +138,7 @@ exports.getDashboardInfo = async (req, res, next) => {
 
     }
     catch(err){
+        console.log(err);
         next(err);
     }
 }

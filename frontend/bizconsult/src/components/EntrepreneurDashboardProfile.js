@@ -4,6 +4,18 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
+
+async function updateInfo(updatedProfileData) {
+    return fetch('http://localhost:8080/updateEntrepreneurProfile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedProfileData)
+    })
+      .then(data => data.json())
+   }
+
 const EntrepreneurDashboardProfile = () => {
     const {state} = useLocation();
     const scienceEngineeringString = 'Science & Engineering';
@@ -11,16 +23,51 @@ const EntrepreneurDashboardProfile = () => {
     const [profileData, setProfileData] = useState();
     const [isLoading, setIsLoading] = useState(1);
     const [showModal, setShowModal] = useState(false);
+    const [refresh, setRefresh] = useState(0);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
 
-    const [firstNameUpdate, setFirstNameUpdate] = useState();
-    const [lastNameUpdate, setLastNameUpdate] = useState();
-    const [ageUpdate, setAgeUpdate] = useState();
-    const [genderUpdate, setGenderUpdate] = useState();
-    const [phoneNumberUpdate, setPhoneNumberUpdate] = useState();
-    const [studiesFieldUpdate, setStudiesFieldUpdate] = useState();
+    const [firstNameUpdate, setFirstNameUpdate] = useState(0);
+    const [lastNameUpdate, setLastNameUpdate] = useState(0);
+    const [ageUpdate, setAgeUpdate] = useState(0);
+    const [genderUpdate, setGenderUpdate] = useState(0);
+    const [phoneNumberUpdate, setPhoneNumberUpdate] = useState(0);
+    const [studiesFieldUpdate, setStudiesFieldUpdate] = useState(0);
+
+    const handleUpdateInfo = async e => {
+        e.preventDefault();
+          await updateInfo({
+              firstNameUpdate,
+              lastNameUpdate,
+              ageUpdate,
+              genderUpdate,
+              phoneNumberUpdate,
+              studiesFieldUpdate,
+              emailAddress
+            });
+        setShowModal(false);
+        if(firstNameUpdate){
+            state.firstName = firstNameUpdate;
+        }
+        if(lastNameUpdate){
+            state.lastName = lastNameUpdate;
+        }
+
+
+        setFirstNameUpdate(0);
+        setLastNameUpdate(0);
+        setGenderUpdate(0);
+        setAgeUpdate(0);
+        setPhoneNumberUpdate(0);
+        setStudiesFieldUpdate(0);
+        if(refresh === 0){
+            setRefresh(1);
+        }
+        else {
+            setRefresh(0);
+        }
+    }
 
     useEffect(() => {
         fetch('http://localhost:8080/getProfileInfo',{
@@ -33,7 +80,7 @@ const EntrepreneurDashboardProfile = () => {
             .then(response => response.json())
             .then(data => {setProfileData(data[0]);setIsLoading(0)})
 
-    }, []);
+    }, [refresh]);
 
 
     if(isLoading){
@@ -176,7 +223,7 @@ const EntrepreneurDashboardProfile = () => {
                                                 <div className="justify-between border-b border-solid border-slate-200 rounded-t">
                                                     <button
                                                         className="p-1 mr-1 mt-0 text-right bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                                        onClick={() => setShowModal(false)}>
+                                                        onClick={() => {setShowModal(false); setFirstNameUpdate(0); setLastNameUpdate(0); setGenderUpdate(0); setAgeUpdate(0); setPhoneNumberUpdate(0); setStudiesFieldUpdate(0)}}>
                                                         <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
                                                         ×
                                                         </span>
@@ -193,8 +240,11 @@ const EntrepreneurDashboardProfile = () => {
                                                     <label for="expiry" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Age</label>
                                                     <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.age} onChange={e => setAgeUpdate(e.target.value)}/>
                                                     <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Gender</label>
-                                                    <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.gender} onChange={e => setGenderUpdate(e.target.value)}/>
-                                                    <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Phone Number</label>
+                                                    <select class="mb-5 bg-white mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.gender} onChange={e => setGenderUpdate(e.target.value)}>
+                                                        <option value="MALE">Male</option>
+                                                        <option value="FEMALE">Female</option>
+                                                        <option value="NOT_SPECIFIED">Prefer not to say</option>
+                                                    </select>                                                    <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Phone Number</label>
                                                     <input id="name" class="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.phoneNumber} onChange={e => setPhoneNumberUpdate(e.target.value)}/>
                                                     <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Studies</label>
                                                     <select class="mb-5 bg-white mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder={profileData.studiesField} onChange={e => setStudiesFieldUpdate(e.target.value)}>
@@ -222,13 +272,13 @@ const EntrepreneurDashboardProfile = () => {
                                                     <button
                                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                         type="button"
-                                                        onClick={() => setShowModal(false)}>
+                                                        onClick={() => {setShowModal(false); setFirstNameUpdate(0); setLastNameUpdate(0); setGenderUpdate(0); setAgeUpdate(0); setPhoneNumberUpdate(0); setStudiesFieldUpdate(0)}}>
                                                         Close
                                                     </button>
                                                     <button
                                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                         type="button"
-                                                        onClick={() => setShowModal(false)}>
+                                                        onClick={handleUpdateInfo}>
                                                         Save Changes
                                                     </button>
                                                 </div>

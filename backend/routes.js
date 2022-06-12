@@ -7,6 +7,7 @@ const { submitProfile } = require('./controllers/profileSubmissionController');
 const { getRecommendation } = require('./controllers/industryRecommendationController');
 const { insertCompany } = require('./controllers/companiesController')
 const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/industryIdeasController')
+const { getExpertDashboardInfo } = require('./controllers/expertsController');
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
 
@@ -74,5 +75,9 @@ router.post('/updateEntrepreneurProfile',[
     body('phoneNumberUpdate'),
     body('studiesFieldUpdate')
 ], updateProfileInfo)
+
+router.post('/getExpertDashboardInfo',[
+    body('emailAddress', "Please insert email address").notEmpty()
+], getExpertDashboardInfo)
 
 module.exports = router;

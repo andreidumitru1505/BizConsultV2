@@ -13,33 +13,12 @@ exports.insertCompany = async(req,res,next) => {
 
     try{
 
-        isPlatformGenerated = false;
-        isIdeaGenerated = false;
-
         const [entrepreneur] = await conn.execute(
             "SELECT * FROM `entrepreneurs` WHERE `emailAddress`=?",[
                 req.body.emailAddress
             ]
         )
         console.log("1");
-
-        const [industryIdeas] = await conn.execute(
-            "SELECT * FROM `industryIdeas` WHERE `entrepreneurId`=?",[
-                entrepreneur[0].id
-            ]
-        )
-        console.log("2");
-
-        for(var i = 0; i < industryIdeas.length; i++){
-            if(industryIdeas[i].isConverted){
-                continue;
-            }
-            if(industryIdeas[i].industry === req.body.industry){
-                isIdeaGenerated = true;
-                isPlatformRecommendation = industryIdeas[i].isPlatformIdea;
-                break;
-            }
-        }
 
         foundedDate = req.body.foundedDate ? req.bodyFoundedDate : new Date();
 
@@ -53,12 +32,11 @@ exports.insertCompany = async(req,res,next) => {
                 req.body.value,
                 req.body.cif,
                 req.body.size,
-                true,
-                isPlatformRecommendation,
-                isIdeaGenerated,
+                req.body.isPlatformRecommendation,
+                req.body.isIdeaGenerated,
                 req.body.mainLocationCity,
                 req.body.mainLocationCountry,
-                foundedDate
+                req.body.foundedDate
             ]
         )
         
@@ -72,12 +50,12 @@ exports.insertCompany = async(req,res,next) => {
             })
         }
         else{
-            if(isPlatformGenerated){
+            if(req.body.isIdeaGenerated){
                 const [updateIdea] = await conn.execute(
-                    "UPDATE `industryIdeas` SET `isConverted`=?, `companyId`=? WHERE `entrepreneurId`=?",[
+                    "UPDATE `industryIdeas` SET `isConverted`=?, `companyId`=? WHERE `id`=?",[
                         true,
                         newCompanyId[0].id,
-                        entrepreneur[0].id
+                        req.body.industryIdeaId
                     ]
                 )
         

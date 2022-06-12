@@ -40,6 +40,7 @@ exports.getEntrepreneurIdeas = async (req, res, next) => {
             }
 
             response.push({
+                id: ideas[i].id,
                 industry: ideas[i].industry,
                 isConverted: ideas[i].isConverted,
                 isPlatformIdea: ideas[i].isPlatformIdea,

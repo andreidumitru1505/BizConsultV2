@@ -32,7 +32,7 @@ exports.insertCompany = async(req,res,next) => {
                 req.body.value,
                 req.body.cif,
                 req.body.size,
-                true,
+                false,
                 req.body.isPlatformRecommendation,
                 req.body.isIdeaGenerated,
                 req.body.mainLocationCity,
@@ -44,6 +44,14 @@ exports.insertCompany = async(req,res,next) => {
         const [newCompanyId] = await conn.execute(
             "SELECT * FROM `companies` ORDER BY id DESC LIMIT 1;"
         )
+
+        const [newApplication] = await conn.execute(
+            "INSERT INTO `applications` (`companyId`, `status`) VALUES (?,?)",[
+                newCompanyId[0].id,
+                'AWAITING REVIEW'
+            ]
+        )
+
         console.log("sda");
         if(newCompany.affectedRows === 0){
             return res.status(422).json({

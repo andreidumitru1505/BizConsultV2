@@ -8,7 +8,7 @@ const { getRecommendation } = require('./controllers/industryRecommendationContr
 const { insertCompany } = require('./controllers/companiesController')
 const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/industryIdeasController')
 const { getExpertDashboardInfo, getOpenApplications, getUnderReviewApplications } = require('./controllers/expertsController')
-const { reviewApplication, getApplication } = require('./controllers/applicationsController')
+const { reviewApplication, getApplication, updateApplicationNotes } = require('./controllers/applicationsController')
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
 
@@ -98,5 +98,10 @@ router.post('/getApplication',[
 router.post('/getUnderReviewApplications',[
     body('emailAddress', "Please insert email address").notEmpty()
 ], getUnderReviewApplications)
+
+router.post('/updateApplicationNotes',[
+    body('companyId', "Please insert companyId").notEmpty(),
+    body('notes', "Please insert notes to update").notEmpty()
+], updateApplicationNotes)
 
 module.exports = router;

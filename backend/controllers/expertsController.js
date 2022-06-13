@@ -179,3 +179,111 @@ exports.getUnderReviewApplications = async (req, res, next) => {
         next(err);
     } 
 }
+
+exports.getAcceptedApplications = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [expert] = await conn.execute(
+            'SELECT * FROM `administrators` WHERE emailAddress=?',[
+                req.body.emailAddress
+        ])
+        
+        const [applicationsAccepted] = await conn.execute(
+            'SELECT * FROM `applications` WHERE `reviewAdminId`=? AND `status`=?',[
+                expert[0].id,
+                'Accepted'
+            ]
+        )
+
+        var response = [];
+
+        for(var i = 0; i < applicationsAccepted.length; i++){
+            var [company] = await conn.execute(
+                'SELECT * FROM `companies` WHERE `id`=?',[
+                    applicationsAccepted[i].companyId,
+                ]
+            )
+
+            date = new Date(company[0].foundedDate);
+            var parsedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            response.push({
+                id: company[0].id,
+                name: company[0].name,
+                size: company[0].size,
+                value: company[0].value,
+                foundedDate: parsedDate
+            })
+        }
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    } 
+}
+
+exports.getRejectedApplications = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [expert] = await conn.execute(
+            'SELECT * FROM `administrators` WHERE emailAddress=?',[
+                req.body.emailAddress
+        ])
+        
+        const [applicationsRejected] = await conn.execute(
+            'SELECT * FROM `applications` WHERE `reviewAdminId`=? AND `status`=?',[
+                expert[0].id,
+                'Rejected'
+            ]
+        )
+
+        var response = [];
+
+        for(var i = 0; i < applicationsRejected.length; i++){
+            var [company] = await conn.execute(
+                'SELECT * FROM `companies` WHERE `id`=?',[
+                    applicationsRejected[i].companyId,
+                ]
+            )
+
+            date = new Date(company[0].foundedDate);
+            var parsedDate = (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            response.push({
+                id: company[0].id,
+                name: company[0].name,
+                size: company[0].size,
+                value: company[0].value,
+                foundedDate: parsedDate
+            })
+        }
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    } 
+}

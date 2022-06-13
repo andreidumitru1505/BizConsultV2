@@ -180,10 +180,13 @@ exports.rejectApplication = async (req, res, next) => {
 
     try{
 
+        const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ')
+
         const [updateApplication] = await conn.execute(
-            'UPDATE `applications` SET reason=?, status=? WHERE companyId=?',[
+            'UPDATE `applications` SET reason=?, status=?, reviewEnd=? WHERE companyId=?',[
                 req.body.reason,
                 'Rejected',
+                currentDate,
                 req.body.companyId
             ]
         )

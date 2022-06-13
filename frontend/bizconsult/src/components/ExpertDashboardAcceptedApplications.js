@@ -4,19 +4,18 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
-const ExpertDashboardOpenApplications = () => {
+const ExpertDashboardAcceptedApplications = () => {
     const {state} = useLocation();
 
-    const [openApplications, setOpenApplications] = useState();
+    const [acceptedApplications, setAcceptedApplications] = useState();
     const [isLoading, setIsLoading] = useState(1);
     const emailAddress = state.emailAddress;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
-    var companyId;
 
     useEffect(() => {
         console.log(state);
-        fetch('http://localhost:8080/getOpenApplications',{
+        fetch('http://localhost:8080/getAcceptedApplications',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -24,22 +23,9 @@ const ExpertDashboardOpenApplications = () => {
             body: JSON.stringify({emailAddress, dummy})
         })
             .then(response => response.json())
-            .then(data => {setOpenApplications(data);setIsLoading(0)})
+            .then(data => {setAcceptedApplications(data);setIsLoading(0)})
 
     }, []);
-
-    const handleReview = (applicationData) => {
-        fetch('http://localhost:8080/reviewApplication', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(applicationData)
-        }).then(data => data.json())
-
-        navigate("/reviewApplication",
-        {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: applicationData.companyId}})
-    }
 
 
     if(isLoading){
@@ -119,7 +105,7 @@ const ExpertDashboardOpenApplications = () => {
                             <section class="container mx-auto p-6 font-mono">
                                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                                     <div class="w-full overflow-x-auto">
-                                        <h2 class="mb-10 font-mono text-3xl font-bold">Check out these applications waiting for your review</h2>
+                                        <h2 class="mb-10 font-mono text-3xl font-bold">Take a look at the applications you have accepted</h2>
                                         <table class="w-full">
                                             <thead>
                                                 <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
@@ -132,8 +118,7 @@ const ExpertDashboardOpenApplications = () => {
                                             </thead>
                                             <tbody class="bg-white">
                                                 {
-                                                    openApplications.map((item) => (
-                                                        
+                                                    acceptedApplications.map((item) => (
                                                         <tr class="text-gray-700">
                                                             <td class="px-4 py-3 border">
                                                                 <div class="text-sm">
@@ -147,16 +132,13 @@ const ExpertDashboardOpenApplications = () => {
                                                             <td class="px-4 py-3 text-xs font-semibold border">{item.foundedDate}</td>
                                                             <td class="px-4 py-3 text-xs font-semibold border">
                                                                 <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
-                                                                    onClick={() => handleReview({
-                                                                        'companyId': item.id,
-                                                                        'emailAddress': emailAddress
-                                                                    })}>
-                                                                    <span>Review</span>
+                                                                    onClick={() => navigate("/reviewApplication",
+                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: item.id}})}>
+                                                                    <span>Open</span>
                                                                 </button>
-                                                            </td>       
+                                                            </td>
                                                         </tr>
                                                     ))
-                                                    
                                                 }
                                             </tbody>
                                         </table>
@@ -173,4 +155,4 @@ const ExpertDashboardOpenApplications = () => {
 }
 
 
-export default ExpertDashboardOpenApplications;
+export default ExpertDashboardAcceptedApplications;

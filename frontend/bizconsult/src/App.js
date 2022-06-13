@@ -16,6 +16,8 @@ import ExpertDashboard from './components/ExpertDashboard';
 import ExpertDashboardOpenApplications from './components/ExpertDashboardOpenApplications';
 import ExpertDashboardUnderReviewApplications from './components/ExpertDashboardUnderReviewApplications';
 import ExpertDashboardReviewApplication from './components/ExpertDashboardReviewApplication';
+import ExpertDashboardAcceptedApplications from './components/ExpertDashboardAcceptedApplications';
+import ExpertDashboardRejectedApplications from './components/ExpertDashboardRejectedApplications';
 
 function App() {
 
@@ -35,6 +37,8 @@ function App() {
                 <Route exact path="/expertDashboardOpenApplications" element = {<ExpertDashboardOpenApplications/>}/>
                 <Route exact path="/expertDashboardUnderReviewApplications" element = {<ExpertDashboardUnderReviewApplications/>}/>
                 <Route exact path="/reviewApplication" element = {<ExpertDashboardReviewApplication/>}/>
+                <Route exact path="/expertDashboardAcceptedApplications" element = {<ExpertDashboardAcceptedApplications/>}/>
+                <Route exact path="expertDashboardRejectedApplications" element= {<ExpertDashboardRejectedApplications/>}/>
             </Routes>
         </div>
     </div>

@@ -131,3 +131,39 @@ exports.getApplication = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.updateApplicationNotes = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [updateApplication] = await conn.execute(
+            'UPDATE `applications` SET notes=? WHERE companyId=?',[
+                req.body.notes,
+                req.body.companyId
+            ]
+        )
+
+        if(updateApplication.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed updating application'
+            })
+        }
+
+        return res.status(422).json({
+            message: 'Application updated successfully!'
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

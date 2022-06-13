@@ -13,6 +13,7 @@ import EntrepreneurDashboardIdeas from './components/entrepreneurDashboardIdeas'
 import EntrepreneurDashboardProfile from './components/EntrepreneurDashboardProfile';
 import EntrepreneurDashboardRegisterCompany from './components/EntrepreneurDashboardRegisterCompany';
 import ExpertDashboard from './components/ExpertDashboard';
+import ExpertDashboardOpenApplications from './components/ExpertDashboardOpenApplications';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
                 <Route exact path="/entrepreneurProfile" element = {<EntrepreneurDashboardProfile/>}/>
                 <Route exact path="/registerCompany" element = {<EntrepreneurDashboardRegisterCompany/>}/>
                 <Route exact path="/expertDashboard" element = {<ExpertDashboard/>}/>
+                <Route exact path="/expertDashboardOpenApplications" element = {<ExpertDashboardOpenApplications/>}/>
             </Routes>
         </div>
     </div>

@@ -133,7 +133,7 @@ const ExpertDashboardUnderReviewApplications = () => {
                                                             <td class="px-4 py-3 text-xs font-semibold border">
                                                                 <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
                                                                     onClick={() => navigate("/reviewApplication",
-                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, isIdeaGenerated: 1, isPlatformRecommendation: item.isPlatformIdea, industryIdeaId: item.id, industry: item.industry}})}>
+                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: item.id, industry: item.industry}})}>
                                                                     <span>Open</span>
                                                                 </button>
                                                             </td>

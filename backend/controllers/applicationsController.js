@@ -87,6 +87,7 @@ exports.getApplication = async (req, res, next) => {
         reviewStartDate = new Date(application[0].reviewStart);
         var parsedReviewStartDate = (reviewStartDate.getMonth() + 1) + '/' + reviewStartDate.getDate() + '/' + reviewStartDate.getFullYear() + ' ' + reviewStartDate.getHours() + ':' + reviewStartDate.getMinutes();
         
+        var parsedReviewEndDate = 'None';
         if(application[0].reviewEnd !== null){
             reviewEndDate = new Date(application[0].reviewEnd);
             var parsedReviewEndDate = (reviewEndDate.getMonth() + 1) + '/' + reviewEndDate.getDate() + '/' + reviewEndDate.getFullYear() + ' ' + reviewEndDate.getHours() + ':' + reviewEndDate.getMinutes();
@@ -110,7 +111,7 @@ exports.getApplication = async (req, res, next) => {
                 notes: application[0].notes,
                 reason: application[0].reason,
                 reviewStart: parsedReviewStartDate,
-                reviewEnd: reviewEndDate,
+                reviewEnd: parsedReviewEndDate,
                 reviewTimeTaken: application[0].reviewTimeTaken
             },
             entrepreneur: {

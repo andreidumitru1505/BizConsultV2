@@ -14,6 +14,7 @@ import EntrepreneurDashboardProfile from './components/EntrepreneurDashboardProf
 import EntrepreneurDashboardRegisterCompany from './components/EntrepreneurDashboardRegisterCompany';
 import ExpertDashboard from './components/ExpertDashboard';
 import ExpertDashboardOpenApplications from './components/ExpertDashboardOpenApplications';
+import ExpertDashboardUnderReviewApplications from './components/ExpertDashboardUnderReviewApplications';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
                 <Route exact path="/registerCompany" element = {<EntrepreneurDashboardRegisterCompany/>}/>
                 <Route exact path="/expertDashboard" element = {<ExpertDashboard/>}/>
                 <Route exact path="/expertDashboardOpenApplications" element = {<ExpertDashboardOpenApplications/>}/>
+                <Route exact path="/expertDashboardUnderReviewApplications" element = {<ExpertDashboardUnderReviewApplications/>}/>
             </Routes>
         </div>
     </div>

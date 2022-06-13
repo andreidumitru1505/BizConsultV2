@@ -204,3 +204,43 @@ exports.rejectApplication = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.acceptApplication = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ')
+
+        const [updateApplication] = await conn.execute(
+            'UPDATE `applications` SET reason=?, status=?, reviewEnd=? WHERE companyId=?',[
+                req.body.reason,
+                'Accepted',
+                currentDate,
+                req.body.companyId
+            ]
+        )
+
+        if(updateApplication.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed updating application'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Application updated successfully!'
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

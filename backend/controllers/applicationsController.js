@@ -35,7 +35,7 @@ exports.reviewApplication = async (req, res, next) => {
             })
         }
 
-        return res.status(422).json({
+        return res.status(201).json({
             message: 'Application updated successfully!'
         })
 
@@ -157,7 +157,7 @@ exports.updateApplicationNotes = async (req, res, next) => {
             })
         }
 
-        return res.status(422).json({
+        return res.status(201).json({
             message: 'Application updated successfully!'
         })
 

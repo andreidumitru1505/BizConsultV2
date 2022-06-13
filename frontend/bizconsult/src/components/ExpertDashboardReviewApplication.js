@@ -4,6 +4,17 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
+async function updateApplicationNotes(updatedApplicationData) {
+    return fetch('http://localhost:8080/updateApplicationNotes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedApplicationData)
+    })
+      .then(data => data.json())
+   }
+
 const ExpertDashboardReviewApplication = () => {
     const {state} = useLocation();
 
@@ -11,11 +22,28 @@ const ExpertDashboardReviewApplication = () => {
     const [isLoading, setIsLoading] = useState(1);
     const [showNotesModal, setShowNotesModal] = useState(false);
     const [showSolveModal, setShowSolveModal] = useState(false)
-    const [notesUpdate, setNotesUpdate] = useState();
+    const [notes, setNotes] = useState();
     const emailAddress = state.emailAddress;
     const companyId = state.companyId;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
+    const [refresh, setRefresh] = useState(0);
+
+    const handleUpdateApplicationNotes = async e => {
+        e.preventDefault();
+          await updateApplicationNotes({
+                companyId,
+                notes
+            });
+        setShowNotesModal(false);
+
+        if(refresh === 0){
+            setRefresh(1);
+        }
+        else {
+            setRefresh(0);
+        }
+    }
 
     useEffect(() => {
         console.log(state);
@@ -27,9 +55,9 @@ const ExpertDashboardReviewApplication = () => {
             body: JSON.stringify({emailAddress, companyId})
         })
             .then(response => response.json())
-            .then(data => {setApplicationInfo(data);setIsLoading(0)})
+            .then(data => {setApplicationInfo(data);console.log(data);setIsLoading(0)})
 
-    }, []);
+    }, [refresh]);
 
 
     if(isLoading){
@@ -245,8 +273,8 @@ const ExpertDashboardReviewApplication = () => {
                                 <div class="mx-10 my-5 w-full">
                                     <div class=" z-0 select-none">
                                             <label for="floating_email" class="font-bold text-gray-600 text-2xl">Notes</label>
-                                            <textarea readOnly type="text" rows="3" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required>
-                                                {applicationInfo.application.notes !== null ? applicationInfo.application.notes : ''}
+                                            <textarea readOnly type="text" rows="3" name="floating_email" value={applicationInfo.application.notes !== null ? applicationInfo.application.notes : ''}class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required>
+                                                
                                             </textarea>
                                     </div>
                                 </div>                                  
@@ -255,8 +283,8 @@ const ExpertDashboardReviewApplication = () => {
                                 <div class="mx-10 my-5 w-full">
                                     <div class=" z-0 select-none">
                                             <label for="floating_email" class="font-bold text-gray-600 text-2xl">{applicationInfo.application.status === 'Accepted' ? 'Accept Reason' : applicationInfo.application.status === 'Rejected' ? 'Reject Reason' : 'Accept/Reject Reason'}</label>
-                                            <textarea readOnly type="text" rows="3" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required>
-                                                {applicationInfo.application.reason !== null ? applicationInfo.application.reason : ''}
+                                            <textarea readOnly type="text" rows="3" name="floating_email" value={applicationInfo.application.reason !== null ? applicationInfo.application.reason : ''} class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required>
+                                            
                                             </textarea>
                                     </div>
                                 </div>                                  
@@ -315,7 +343,7 @@ const ExpertDashboardReviewApplication = () => {
                                             </h3>
                                         </div>
                                         <div class="py-8 px-5 md:px-10 bg-white">
-                                        <textarea type="text" rows="5" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required onChange={e => setNotesUpdate(e.target.value)}>
+                                        <textarea type="text" rows="5" name="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 peer" placeholder=" " required onChange={e => setNotes(e.target.value)}>
                                                 {applicationInfo.application.notes !== null ? applicationInfo.application.notes : ''}
                                             </textarea>
                                         </div>
@@ -329,6 +357,7 @@ const ExpertDashboardReviewApplication = () => {
                                             <button
                                                 className="bg-green-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                 type="button"
+                                                onClick={handleUpdateApplicationNotes}
                                                 >
                                                 Save Changes
                                             </button>

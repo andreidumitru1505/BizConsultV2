@@ -231,6 +231,33 @@ exports.acceptApplication = async (req, res, next) => {
             ]
         )
 
+        const [company] = await conn.execute(
+            'SELECT * FROM `companies` WHERE id=?',[
+                req.body.companyId
+            ]
+        )
+
+        const [collaborations] = await conn.execute(
+            'SELECT * FROM `collaborations` WHERE offerCompanyId=?',[
+                company[0].id
+            ]
+        )
+
+        var rating = new Number(3.5);
+        for(var i = 0; i < collaborations.length; i++){
+            if(collaborations[i].hasDesiredProfit){
+                rating = ((Number(collaborations[i].actualProfitMetric) / Number(collaborations[i].desiredProfitMetric) * 5.0) + rating) / 2.0;
+                rating = rating > 5 ? 5 : rating;
+            }
+        }
+
+        const [companyUpdate] = await conn.execute(
+            'UPDATE `companies` SET rating=? WHERE id=?',[
+                rating,
+                req.body.companyId
+            ]
+        )
+
         if(updateApplication.affectedRows === 0){
             return res.status(422).json({
                 message: 'Failed updating application'

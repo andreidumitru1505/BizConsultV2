@@ -9,7 +9,7 @@ const { insertCompany, getCompanyDashboardInformation } = require('./controllers
 const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/industryIdeasController')
 const { getExpertDashboardInfo, getOpenApplications, getUnderReviewApplications, getAcceptedApplications, getRejectedApplications } = require('./controllers/expertsController')
 const { reviewApplication, getApplication, updateApplicationNotes, rejectApplication, acceptApplication } = require('./controllers/applicationsController')
-const { insertExternalCollaboration, getCompanyCollaborations } = require('./controllers/collaborationsController')
+const { insertExternalCollaboration, getCompanyCollaborations, insert } = require('./controllers/collaborationsController')
 
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
@@ -128,11 +128,11 @@ router.post('/acceptApplication',[
     body('reason', "Please insert notes to update").notEmpty()
 ], acceptApplication)
 
-router.post('/insertExternalCollaboration',[
+router.post('/insertExternalCollaborations',[
     body('companyId', "Please insert companyId").notEmpty(),
     body('requestCompanyName', "Please insert request company name").notEmpty(),
-    body('startDate', "Please insert start dates").notEmpty,
-    body('endDate', "Pleae insert end date").notEmpty,
+    body('startDate', "Please insert start dates").notEmpty(),
+    body('endDate', "Pleae insert end date").notEmpty(),
     body('hasDesiredProfit', "Please insert if collaboration has desired profit").notEmpty(),
     body('desiredProfitMetric'),
     body('actualProfitMetric'),

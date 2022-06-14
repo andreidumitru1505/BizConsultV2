@@ -78,11 +78,11 @@ const CompanyDashboard = () => {
                         </li>
                         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
-                            </svg>
-                            <button  onClick={() => navigate("/registerCompany",
-                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, isIdeaGenerated: 0, isPlatformRecommendation: 0, industryIdeaId: -1, industry: ''}})}>
-                                            Company
+                                <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+                            </svg>     
+                            <button  onClick={() => navigate("/collaborations",
+                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId}})}>
+                                            Collaborations
                             </button>
                         </li>
                         </ul>
@@ -98,7 +98,7 @@ const CompanyDashboard = () => {
                                 </svg>     
                                 <div class="text-center">
                                     <h1 class="text-4xl font-bold text-gray-800">{companyInfo.collaborationsNo}</h1>
-                                    <span class="text-gray-500">Collaborations</span>
+                                    <span class="text-gray-500">Collaborations Formed</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">

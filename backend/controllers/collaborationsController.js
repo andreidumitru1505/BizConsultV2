@@ -15,8 +15,10 @@ exports.insertExternalCollaboration = async(req,res,next) => {
         var desiredProfitMetric = req.body.hasDesiredProfit ? req.body.desiredProfitMetric : null;
         var actualProfitMetric = req.body.hasDesiredProfit ? req.body.actualProfitMetric : null;
 
+        console.log(req.body);
+
         const [newCollaboration] = await conn.execute(
-            "INSERT INTO `collaborations` (`offerCompanyId`,`requestCompanyName`, `startDate`, `endDate`, `hasDesiredProfit`, `desiredProfitMetric`, `actualProfitMetric`, `isSuccess`, `isExternal``) VALUES (?,?,?,?,?,?,?,?,?)",[
+            "INSERT INTO `collaborations` (`offerCompanyId`,`requestCompanyName`, `startDate`, `endDate`, `hasDesiredProfit`, `desiredProfitMetric`, `actualProfitMetric`, `isSuccess`, `isExternal`) VALUES (?,?,?,?,?,?,?,?,?)",[
                 req.body.companyId,
                 req.body.requestCompanyName,
                 req.body.startDate,
@@ -76,8 +78,9 @@ exports.getCompanyCollaborations = async(req,res,next) => {
                 ]
             )
 
+            var partnerCompanyName = collaborations[0].isExternal ? collaborations[i].requestCompanyName : partnerCompany[0].name;
             response.push({
-                partnerCompanyName: partnerCompany[0].name,
+                partnerCompanyName: partnerCompanyName,
                 partnerCompanyId: partnerCompanyId,
                 isSuccess: collaborations[i].isSuccess,
                 isExternal: collaborations[i].isExternal,

@@ -19,6 +19,7 @@ import ExpertDashboardReviewApplication from './components/ExpertDashboardReview
 import ExpertDashboardAcceptedApplications from './components/ExpertDashboardAcceptedApplications';
 import ExpertDashboardRejectedApplications from './components/ExpertDashboardRejectedApplications';
 import CompanyDashboard from './components/CompanyDashboard';
+import CompanyCollaborationsDashboard from './components/CompanyCollaborationsDashboard';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
                 <Route exact path="/expertDashboardAcceptedApplications" element = {<ExpertDashboardAcceptedApplications/>}/>
                 <Route exact path="/expertDashboardRejectedApplications" element = {<ExpertDashboardRejectedApplications/>}/>
                 <Route exact path="/companyDashboard" element = {<CompanyDashboard/>}/>
+                <Route exact path="/collaborations" element = {<CompanyCollaborationsDashboard/>}/>
             </Routes>
         </div>
     </div>

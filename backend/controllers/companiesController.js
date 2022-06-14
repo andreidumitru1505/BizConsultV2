@@ -134,7 +134,8 @@ exports.getCompanyDashboardInformation = async(req,res,next) => {
         var response = {
             rating: rating,
             earnings: earnings,
-            collaborationsNo: allCollaborations.length
+            collaborationsNo: allCollaborations.length,
+            name: company[0].name
         }
 
         res.contentType('application/json')

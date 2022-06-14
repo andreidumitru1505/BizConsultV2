@@ -99,8 +99,8 @@ const CompanyCollaborationsDashboard = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                             </svg>
-                            <button  onClick={() => navigate("/entrepreneurDashboard",
-                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role}})}>
+                            <button  onClick={() => navigate("/companyDashboard",
+                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId}})}>
                                             Dashboard
                             </button>
                         </li>
@@ -206,6 +206,13 @@ const CompanyCollaborationsDashboard = () => {
                                                                 </svg>
                                                             </td>
                                                             }
+                                                            <td class="px-4 py-3 text-xs font-semibold border">
+                                                                <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
+                                                                    onClick={() => navigate("/collaborationInfo",
+                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId, collaborationId: item.collaborationId}})}>
+                                                                    <span>See more</span>
+                                                                </button>
+                                                            </td>
                                                         </tr>
                                                     ))
                                                 }

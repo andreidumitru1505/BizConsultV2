@@ -1,5 +1,6 @@
 const conn = require('../dbConn').promise();
 const {validationResult} = require('express-validator');
+const dbConn = require('../dbConn');
 
 exports.insertExternalCollaboration = async(req,res,next) => {
     const errors = validationResult(req);
@@ -89,6 +90,69 @@ exports.getCompanyCollaborations = async(req,res,next) => {
             })
 
         }
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+exports.getCollaborationInfo = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [collaborations] = await conn.execute(
+            "SELECT * FROM `collaborations` WHERE id=?",[
+                req.body.collaborationId
+            ]
+        )
+
+        var partnerCompanyName;
+        if(collaborations[0].requestCompanyId !== null){
+            const [partnerCompany] = await dbConn.execute(
+                "SELECT * FROM `companies` WHERE id=?",[
+                    collaborations[0].requestCompanyId
+                ]
+            )
+            partnerCompanyName = partnerCompany[0].name;
+        }
+        else{
+            partnerCompanyName = collaborations[0].requestCompanyName
+        }
+
+
+        var collaborationSide = req.body.companyId === collaborations[0].offerCompanyId ? 'Offer Service' : 'Request Service';
+
+        startDate = new Date(collaborations[0].startDate);
+        var parsedStartDate = (startDate.getMonth() + 1) + '/' + startDate.getDate() + '/' + startDate.getFullYear();
+
+        endDate = new Date(collaborations[0].endDate);
+        var parsedEndDate = (endDate.getMonth() + 1) + '/' + endDate.getDate() + '/' + endDate.getFullYear();
+
+
+        response = {
+            partnerCompanyName: partnerCompanyName,
+            isSuccess: collaborations[0].isSuccess,
+            isExternal: collaborations[0].isExternal,
+            collaborationSide: collaborationSide,
+            startDate: parsedStartDate,
+            endDate: parsedEndDate,
+            hasDesiredProfit: collaborations[0].hasDesiredProfit,
+            desiredProfitMetric: collaborations[0].desiredProfitMetric,
+            actualProfitMetric: collaborations[0].actualProfitMetric,
+        }
+        
 
         res.contentType('application/json')
         return res.send(JSON.stringify(response));

@@ -91,3 +91,59 @@ exports.insertCompany = async(req,res,next) => {
         next(err);
     }
 }
+
+exports.getCompanyDashboardInformation = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [company] = await conn.execute(
+            "SELECT * FROM `companies` WHERE `id`=?",[
+                req.body.companyId
+            ]
+        )
+        
+        const [revenueCollaborations] = await conn.execute(
+            "SELECT * FROM `collaborations` WHERE `offerCompanyId`=?",[
+                req.body.companyId
+            ]
+        )
+
+        var earnings = 0;
+        for(var i = 0; i < revenueCollaborations.length; i++){
+            if(revenueCollaborations[i].hasDesiredProfit){
+                earnings += revenueCollaborations[i].actualProfitMetric;
+            }
+        }
+
+        const [allCollaborations] = await conn.execute(
+            'SELECT * FROM `collaborations` WHERE (offerCompanyId=? OR requestCompanyId=?)',[
+                req.body.companyId,
+                req.body.companyId
+            ]
+        )
+
+
+        var rating = company[0].rating === null ? 0 : company[0].rating
+        var response = {
+            rating: rating,
+            earnings: earnings,
+            collaborationsNo: allCollaborations.length
+        }
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

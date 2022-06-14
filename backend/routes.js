@@ -5,7 +5,7 @@ const { getEntrepreneurs, getDashboardInfo, getProfileInfo, updateProfileInfo } 
 const { enrolledUserCheck } = require('./controllers/enrolledUserCheck');
 const { submitProfile } = require('./controllers/profileSubmissionController');
 const { getRecommendation } = require('./controllers/industryRecommendationController');
-const { insertCompany } = require('./controllers/companiesController')
+const { insertCompany, getCompanyDashboardInformation } = require('./controllers/companiesController')
 const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/industryIdeasController')
 const { getExpertDashboardInfo, getOpenApplications, getUnderReviewApplications, getAcceptedApplications, getRejectedApplications } = require('./controllers/expertsController')
 const { reviewApplication, getApplication, updateApplicationNotes, rejectApplication, acceptApplication } = require('./controllers/applicationsController')
@@ -48,6 +48,10 @@ router.post('/insertCompany',[
     body('industryIdeaId'),
     body('foundedDate')
 ], insertCompany)
+
+router.post('/getCompanyDashboardInfo',[
+    body('companyId', "Please insert company id").notEmpty()
+], getCompanyDashboardInformation)
 
 router.post('/getDashboardInfo',[
     body('emailAddress', "Please inset email address")

@@ -53,8 +53,8 @@ const CompanyDashboard = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                             </svg>
-                            <button  onClick={() => navigate("/entrepreneurDashboard",
-                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role}})}>
+                            <button  onClick={() => navigate("/companyDashboard",
+                                            {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId}})}>
                                             Dashboard
                             </button>
                         </li>
@@ -89,7 +89,7 @@ const CompanyDashboard = () => {
                     </aside>
                     <main class="flex-col bg-indigo-50 w-full ml-4 pr-6">
                     <div class="flex p-4 bg-white items-center mt-3 rounded-xl shadow-lg">
-                        <h1 class="text-4xl font-bold text-gray-700">{state.companyName}</h1>
+                        <h1 class="text-4xl font-bold text-gray-700">{companyInfo.name}</h1>
                     </div>
                         <div class="flex justify-between mt-4 space-x-4 s">
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">

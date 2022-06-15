@@ -148,3 +148,53 @@ exports.getCompanyDashboardInformation = async(req,res,next) => {
         next(err);
     }
 }
+
+exports.getCompaniesByIndustry = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [entrepreneur] = await conn.execute(
+            'SELECT * FROM `entrepreneurs` WHERE emailAddress=?',[
+                req.body.emailAddress
+            ]
+        )
+
+        const [companies] = await conn.execute(
+            "SELECT * FROM `companies` WHERE industry=? AND entrepreneurId<>? AND isActive=? ORDER BY rating DESC",[
+                req.body.industry,
+                entrepreneur[0].id,
+                true
+            ]
+        )
+        
+        var response = []
+
+        for(var i = 0; i < companies.length; i++){
+            response.push({
+                name: companies[i].name,
+                industry: companies[i].industry,
+                website: companies[i].website,
+                city: companies[i].mainLocationCity,
+                country: companies[i].country,
+                companyId: companies[i].id,
+                rating: companies[i].rating
+            })
+        }
+        
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

@@ -212,7 +212,7 @@ exports.getCompanyInfo = async(req,res,next) => {
 
         const [company] = await conn.execute(
             'SELECT * FROM `companies` WHERE id=?',[
-                req.body.companyId
+                req.body.partnerCompanyId
             ]
         )
 
@@ -235,11 +235,12 @@ exports.getCompanyInfo = async(req,res,next) => {
             companyInfo: {
                 name: company[0].name,
                 website: company[0].website,
-                sze: company[0].size,
+                size: company[0].size,
                 foundedDate: parsedFoundedDate,
                 city: company[0].mainLocationCity,
                 country: company[0].mainLocationCountry,
-                rating: company[0].rating
+                rating: company[0].rating,
+                description: company[0].description
             },
             entrepreneurInfo: {
                 firstName: entrepreneur[0].firstName,

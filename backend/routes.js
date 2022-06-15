@@ -61,7 +61,7 @@ router.post('/getCompaniesByIndustry',[
 ], getCompaniesByIndustry)
 
 router.post('/getCompanyInfo',[
-    body('companyId', "Please insert company Id").notEmpty()
+    body('partnerCompanyId', "Please insert company Id").notEmpty()
 ], getCompanyInfo)
 
 router.post('/getDashboardInfo',[

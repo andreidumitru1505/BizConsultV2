@@ -22,6 +22,7 @@ import CompanyDashboard from './components/CompanyDashboard';
 import CompanyCollaborationsDashboard from './components/CompanyCollaborationsDashboard';
 import CompanyCollaborationInfoDashboard from './components/CompanyCollaborationInfoDashboard';
 import CompanyPartnerSearchDashboard from './components/CompanyPartnerSearchDashboard';
+import CompanyPartnerCompanyInfoDashboard from './components/CompanyPartnerCompanyInfoDashboard';
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
                 <Route exact path="/collaborations" element = {<CompanyCollaborationsDashboard/>}/>
                 <Route exact path="/collaborationInfo" element = {<CompanyCollaborationInfoDashboard/>}/>
                 <Route exact path="/partnerSearch" element = {<CompanyPartnerSearchDashboard/>}/>
+                <Route exact path="/partnerCompanyInfo" element = {<CompanyPartnerCompanyInfoDashboard/>}/>
             </Routes>
         </div>
     </div>

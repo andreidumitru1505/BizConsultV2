@@ -93,92 +93,107 @@ const CompanyCollaborationInfoDashboard = () => {
                         </div>
                         <div class="flex justify-between mt-4 space-x-4 s">
                             <div class="bg-white w-full rounded-xl shadow-lg items-center flex ">
-                                        <div class='w-1/2 my-10 mx-10'>
-                                            <div class="flex items-center mb-5">
-                                                <label for="name" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Partner</label>
-                                                <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.partnerCompanyName}</p>
-                                            </div>
-                                            <div class="flex items-center mb-5">
-                                                <label for="name" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Business Side</label>
-                                                <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.collaborationSide}</p>
-                                            </div>
-                                            <div class="flex items-center mb-5">
-                                                <label for="name" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Source</label>
-                                                <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.isExternal ? 'External' : 'Platform'}</p>
-                                            </div>
-                                            <div class="flex items-center mb-5">
-                                                <label for="name" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Start Date</label>
-                                                <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.startDate}</p>
-                                            </div>
-                                            <div class="flex items-center mb-5">
-                                                <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">End Date</label>
-                                                <p type="time" id="time" name="time" placeholder="time" 
-                                                    class=" w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.endDate}</p>
-                                            </div>
+                                <div class='w-1/2 my-10 mx-10'>
+                                    <div class="flex items-center mb-5">
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Partner</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.partnerCompanyName}</p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Business Side</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.collaborationSide}</p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Source</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.isExternal ? 'External' : 'Platform'}</p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="name" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Start Date</label>
+                                        <p class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.startDate}</p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">End Date</label>
+                                        <p type="time" id="time" name="time" placeholder="time" 
+                                            class=" w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.endDate}</p>
+                                    </div>
+                                </div>
+                                <div class='w-1/2 my-10 mx-10'>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Status</label>
+                                        <p type="time" id="time" name="time" placeholder="time" 
+                                            class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.status} </p>
+                                    </div>
+                                    <div class="flex items-center mb-5">
+                                        <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                font-bold text-gray-600">Profit-based</label>
+                                        <p type="time" id="time" name="time" placeholder="time" 
+                                            class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                    text-gray-600 placeholder-gray-400
+                                                    outline-none">{collaborationData.hasDesiredProfit ? 'Yes' : 'No'} </p>
+                                    </div>
+                                    {collaborationData.hasDesiredProfit &&
+                                    <div>
+                                        <div class="flex items-center mb-5">
+                                            <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                    font-bold text-gray-600">Desired Profit</label>
+                                            <p type="time" id="time" name="time" placeholder="time" 
+                                                class=" w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                        text-gray-600 placeholder-gray-400
+                                                        outline-none">{collaborationData.desiredProfitMetric}</p>
                                         </div>
-                                        <div class='w-1/2 my-10 mx-10'>
-                                            <div class="flex items-center mb-5">
-                                                <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Status</label>
-                                                <p type="time" id="time" name="time" placeholder="time" 
-                                                    class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.status} </p>
-                                            </div>
-                                            <div class="flex items-center mb-5">
-                                                <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                        font-bold text-gray-600">Profit-based</label>
-                                                <p type="time" id="time" name="time" placeholder="time" 
-                                                    class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                            text-gray-600 placeholder-gray-400
-                                                            outline-none">{collaborationData.hasDesiredProfit ? 'Yes' : 'No'} </p>
-                                            </div>
-                                            {collaborationData.hasDesiredProfit &&
-                                            <div>
-                                                <div class="flex items-center mb-5">
-                                                    <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                            font-bold text-gray-600">Desired Profit</label>
-                                                    <p type="time" id="time" name="time" placeholder="time" 
-                                                        class=" w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                                text-gray-600 placeholder-gray-400
-                                                                outline-none">{collaborationData.desiredProfitMetric}</p>
-                                                </div>
-                                                <div class="flex items-center mb-5">
-                                                    <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                            font-bold text-gray-600">Actual Profit</label>
-                                                    <p type="time" id="time" name="time" placeholder="time" 
-                                                        class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                                text-gray-600 placeholder-gray-400
-                                                                outline-none">{collaborationData.actualProfitMetric} </p>
-                                                </div>
-                                            </div>
-                                            }
-                                            <div class="flex items-center mb-5">
-                                                    <label for="number" class="inline-block w-40 mr-6 text-right 
-                                                                            font-bold text-gray-600">Success</label>
-                                                    <p type="time" id="time" name="time" placeholder="time" 
-                                                        class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
-                                                                text-gray-600 placeholder-gray-400
-                                                                outline-none">{collaborationData.isSuccess ? 'Yes' : 'No'} </p>
-                                            </div>
+                                        <div class="flex items-center mb-5">
+                                            <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                    font-bold text-gray-600">Actual Profit</label>
+                                            <p type="time" id="time" name="time" placeholder="time" 
+                                                class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                        text-gray-600 placeholder-gray-400
+                                                        outline-none">{collaborationData.actualProfitMetric} </p>
                                         </div>
+                                    </div>
+                                    }
+                                    <div class="flex items-center mb-5">
+                                            <label for="number" class="inline-block w-40 mr-6 text-right 
+                                                                    font-bold text-gray-600">Success</label>
+                                            <p type="time" id="time" name="time" placeholder="time" 
+                                                class="w-full py-2 border-b-2 border-gray-400 focus:border-green-400 
+                                                        text-gray-600 placeholder-gray-400
+                                                        outline-none">{collaborationData.isSuccess ? 'Yes' : 'No'} </p>
+                                    </div>
+                                </div>       
                             </div>
                         </div>
+                        {collaborationData.status === 'Awaiting Response' &&
+                        collaborationData.collaborationSide === 'Offer Service' &&
+                        <div class="flex justify-between space-x-4 s">
+                            <div class=" w-1/3 rounded-xl mx-auto flex justify-start">
+                                <div class="mx-10 my-20 w-full">
+                                    <button
+                                            className="w-8/12  bg-indigo-500 items-center text-white hover:bg-indigo-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                        >
+                                            Accept Collaboration
+                                    </button>
+                                </div>                                  
+                            </div>
+                        </div>
+                        }
                     </main>
                 </div>
             </div>

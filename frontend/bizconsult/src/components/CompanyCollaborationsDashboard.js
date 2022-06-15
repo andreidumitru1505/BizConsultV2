@@ -25,6 +25,7 @@ const CompanyCollaborationsDashboard = () => {
     const [desiredProfitMetric, setDesiredProfitMetric] = useState();
     const [actualProfitMetric, setActualProfitMetric] = useState();
     const [isSuccess, setIsSuccess] = useState(false);
+    const [status, setStatus] = useState('Ongoing');
 
 
     const [collaborations, setCollaborations] = useState();
@@ -67,12 +68,12 @@ const CompanyCollaborationsDashboard = () => {
             headers:{
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({companyId, dummy})
+            body: JSON.stringify({companyId, status})
         })
             .then(response => response.json())
             .then(data => {setCollaborations(data); setIsLoading(0)})
 
-    }, [refresh]);
+    }, [refresh, status]);
 
 
     if(isLoading){
@@ -149,6 +150,14 @@ const CompanyCollaborationsDashboard = () => {
                                             >
                                                 Add External Collaboration
                                             </button>
+                                        </div>
+                                        <div class="text-center mx-auto mb-10 w-3/12 items-center">
+                                            <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Status</label>
+                                            <select class="mb-5 bg-white mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-semibold w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" defaultValue='Ongoing' onChange={e => setStatus(e.target.value)}>
+                                                                <option value="Ongoing">Ongoing</option>
+                                                                <option value="Awaiting Response">Awaiting Response</option>
+                                                                <option value="Completed">Completed</option>
+                                            </select> 
                                         </div>
                                         <table class="w-full">
                                             <thead>

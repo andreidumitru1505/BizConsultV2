@@ -123,7 +123,7 @@ exports.getCollaborationInfo = async(req,res,next) => {
 
         var partnerCompanyName;
         if(collaborations[0].requestCompanyId !== null){
-            const [partnerCompany] = await dbConn.execute(
+            const [partnerCompany] = await conn.execute(
                 "SELECT * FROM `companies` WHERE id=?",[
                     collaborations[0].requestCompanyId
                 ]

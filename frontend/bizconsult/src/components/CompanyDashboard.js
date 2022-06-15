@@ -98,7 +98,7 @@ const CompanyDashboard = () => {
                                 </svg>     
                                 <div class="text-center">
                                     <h1 class="text-4xl font-bold text-gray-800">{companyInfo.collaborationsNo}</h1>
-                                    <span class="text-gray-500">Collaborations Formed</span>
+                                    <span class="text-gray-500">Collaborations Completed</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">

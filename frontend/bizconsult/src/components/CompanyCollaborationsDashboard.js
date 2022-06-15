@@ -155,6 +155,7 @@ const CompanyCollaborationsDashboard = () => {
                                                 <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                                                     <th class="px-4 py-3">Partner Company</th>
                                                     <th class="px-4 py-3">Business Side</th>
+                                                    <th class="px-4 py-3">Status</th>
                                                     <th class="px-4 py-3">Success</th>
                                                     <th class="px-4 py-3">External</th>
                                                     <th class="px-4 py-3">Actions</th>
@@ -175,6 +176,13 @@ const CompanyCollaborationsDashboard = () => {
                                                                 <div class=" text-sm">
                                                                     <div>
                                                                         <p class="font-semibold text-black">{item.collaborationSide}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-4 py-3 border">
+                                                                <div class=" text-sm">
+                                                                    <div>
+                                                                        <p class="font-semibold text-black">{item.status}</p>
                                                                     </div>
                                                                 </div>
                                                             </td>

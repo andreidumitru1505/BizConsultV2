@@ -80,7 +80,7 @@ exports.getCompanyCollaborations = async(req,res,next) => {
                 ]
             )
 
-            var partnerCompanyName = collaborations[0].isExternal ? collaborations[i].requestCompanyName : partnerCompany[0].name;
+            var partnerCompanyName = collaborations[i].isExternal ? collaborations[i].requestCompanyName : partnerCompany[0].name;
             response.push({
                 partnerCompanyName: partnerCompanyName,
                 partnerCompanyId: partnerCompanyId,
@@ -181,14 +181,15 @@ exports.requestCollaboration = async(req,res,next) => {
 
         var desiredProfitMetric = req.body.hasDesiredProfit ? req.body.desiredProfitMetric : null;
         const [newCollaboration] = await conn.execute(
-            "INSERT INTO `collaborations` (`requestCompanyId`, `offerCompanyId`, `startDate`, `endDate`, `hasDesiredProfit`, `desiredProfitMetric`, `status`) VALUES (?,?,?,?,?,?,?)",[
+            "INSERT INTO `collaborations` (`requestCompanyId`, `offerCompanyId`, `startDate`, `endDate`, `hasDesiredProfit`, `desiredProfitMetric`, `status`, `isExternal`) VALUES (?,?,?,?,?,?,?,?)",[
                 req.body.requestCompanyId,
                 req.body.offerCompanyId,
                 req.body.startDate,
                 req.body.endDate,
                 req.body.hasDesiredProfit,
                 desiredProfitMetric,
-                'Awaiting Response'
+                'Awaiting Response',
+                false
             ]
         )
 

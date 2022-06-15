@@ -179,8 +179,8 @@ const CompanyPartnerSearchDashboard = () => {
                                                             </td>
                                                             <td class="px-4 py-3 text-xs font-semibold border">
                                                                 <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
-                                                                    onClick={() => navigate("/collaborationInfo",
-                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId}})}>
+                                                                    onClick={() => navigate("/partnerCompanyInfo",
+                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId, partnerCompanyId: item.companyId}})}>
                                                                     <span>See more</span>
                                                                 </button>
                                                             </td>

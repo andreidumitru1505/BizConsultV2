@@ -182,7 +182,7 @@ exports.getCompaniesByIndustry = async(req,res,next) => {
                 industry: companies[i].industry,
                 website: companies[i].website,
                 city: companies[i].mainLocationCity,
-                country: companies[i].country,
+                country: companies[i].mainLocationCountry,
                 companyId: companies[i].id,
                 rating: companies[i].rating
             })

@@ -251,10 +251,12 @@ exports.acceptApplication = async (req, res, next) => {
             }
         }
 
+        rating = collaborations.length === 0 ? 3.5 : rating;
+
         const [companyUpdate] = await conn.execute(
-            'UPDATE `companies` SET rating=?, isActive=? WHERE id=?',[
-                rating,
+            "UPDATE `companies` SET `isActive`=?, `rating`=? WHERE `id`=?",[
                 true,
+                rating,
                 req.body.companyId
             ]
         )

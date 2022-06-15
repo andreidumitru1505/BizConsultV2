@@ -123,7 +123,8 @@ exports.getCompanyDashboardInformation = async(req,res,next) => {
         }
 
         const [allCollaborations] = await conn.execute(
-            'SELECT * FROM `collaborations` WHERE (offerCompanyId=? OR requestCompanyId=?)',[
+            'SELECT * FROM `collaborations` WHERE `status`<>? AND (offerCompanyId=? OR requestCompanyId=?)',[
+                "Refused",
                 req.body.companyId,
                 req.body.companyId
             ]

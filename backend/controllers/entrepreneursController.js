@@ -107,8 +107,10 @@ exports.getDashboardInfo = async (req, res, next) => {
                 }
             }
             const [collaborations] = await conn.execute(
-                'SELECT * FROM `collaborations` WHERE offerCompanyId=?',[
-                    companies[i].id
+                'SELECT * FROM `collaborations` WHERE offerCompanyId=? AND status<>? AND hasDesiredProfit=?',[
+                    companies[i].id,
+                    "Refused",
+                    true
                 ]
             )
 

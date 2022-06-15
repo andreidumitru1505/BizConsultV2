@@ -198,3 +198,65 @@ exports.getCompaniesByIndustry = async(req,res,next) => {
         next(err);
     }
 }
+
+exports.getCompanyInfo = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [company] = await conn.execute(
+            'SELECT * FROM `companies` WHERE id=?',[
+                req.body.companyId
+            ]
+        )
+
+        const [entrepreneur] = await conn.execute(
+            "SELECT * FROM `entrepreneurs` WHERE id=?",[
+                company[0].entrepreneurId
+            ]
+        )
+        const [collaborations] = await conn.execute(
+            "SELECT * FROM `collaborations` WHERE offerCompanyId=? AND isSuccess=?",[
+                company[0].id,
+                true
+            ]
+        )
+
+        foundedDate = new Date(company[0].foundedDate);
+        var parsedFoundedDate = (foundedDate.getMonth() + 1) + '/' + foundedDate.getDate() + '/' + foundedDate.getFullYear();
+
+        var response={
+            companyInfo: {
+                name: company[0].name,
+                website: company[0].website,
+                sze: company[0].size,
+                foundedDate: parsedFoundedDate,
+                city: company[0].mainLocationCity,
+                country: company[0].mainLocationCountry,
+                rating: company[0].rating
+            },
+            entrepreneurInfo: {
+                firstName: entrepreneur[0].firstName,
+                lastName: entrepreneur[0].lastName,
+                emailAddress: entrepreneur[0].emailAddress,
+                phoneNumber: entrepreneur[0].phoneNumber
+            },
+            successCollaborations: collaborations.length
+        }
+        
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

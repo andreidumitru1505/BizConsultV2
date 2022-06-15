@@ -62,9 +62,10 @@ exports.getCompanyCollaborations = async(req,res,next) => {
     try{
 
         const [collaborations] = await conn.execute(
-            "SELECT * FROM `collaborations` WHERE (`offerCompanyId`=? OR requestCompanyId=?)",[
+            "SELECT * FROM `collaborations` WHERE (`offerCompanyId`=? OR requestCompanyId=?) AND `status`=?",[
                 req.body.companyId,
-                req.body.companyId
+                req.body.companyId,
+                req.body.status
             ]
         )
 

@@ -123,12 +123,23 @@ exports.getCollaborationInfo = async(req,res,next) => {
 
         var partnerCompanyName;
         if(collaborations[0].requestCompanyId !== null){
-            const [partnerCompany] = await conn.execute(
-                "SELECT * FROM `companies` WHERE id=?",[
-                    collaborations[0].requestCompanyId
-                ]
-            )
-            partnerCompanyName = partnerCompany[0].name;
+            if(collaborations[0].requestCompanyId === req.body.companyId) {
+                const [partnerCompany] = await conn.execute(
+                    "SELECT * FROM `companies` WHERE id=?",[
+                        collaborations[0].offerCompanyId
+                    ]
+                )
+                partnerCompanyName = partnerCompany[0].name
+            }
+            else{
+                const [partnerCompany] = await conn.execute(
+                    "SELECT * FROM `companies` WHERE id=?",[
+                        collaborations[0].requestCompanyId
+                    ]
+                )
+                partnerCompanyName = partnerCompany[0].name
+            }
+
         }
         else{
             partnerCompanyName = collaborations[0].requestCompanyName

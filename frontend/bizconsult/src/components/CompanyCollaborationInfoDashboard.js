@@ -4,6 +4,29 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
+
+async function acceptCollaboration(collaborationData) {
+    return fetch('http://localhost:8080/acceptCollaboration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(collaborationData)
+    })
+      .then(data => data.json())
+   }
+
+async function refuseCollaboration(collaborationData) {
+    return fetch('http://localhost:8080/refuseCollaboration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(collaborationData)
+    })
+      .then(data => data.json())
+   }
+
 const CompanyCollaborationInfoDashboard = () => {
     const {state} = useLocation();
 
@@ -14,6 +37,7 @@ const CompanyCollaborationInfoDashboard = () => {
     const collaborationId = state.collaborationId
     const [collaborationData, setCollaborationData] = useState();
     const [isLoading, setIsLoading] = useState(1);
+    const dummy = 'dummy';
 
     useEffect(() => {
         fetch('http://localhost:8080/getCollaborationInfo',{
@@ -27,6 +51,29 @@ const CompanyCollaborationInfoDashboard = () => {
             .then(data => {setCollaborationData(data);setIsLoading(0)})
 
     }, []);
+
+    const handleAcceptCollaboration = async e => {
+
+        e.preventDefault();
+
+        await acceptCollaboration({
+            collaborationId,
+            dummy
+        });
+
+        navigate("/collaborations", {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId}})
+    }
+    const handleRefuseCollaboration = async e => {
+
+        e.preventDefault();
+
+        await refuseCollaboration({
+            collaborationId,
+            dummy
+        });
+
+        navigate("/collaborations", {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId}})
+    }
 
 
     if(isLoading){
@@ -182,15 +229,25 @@ const CompanyCollaborationInfoDashboard = () => {
                         {collaborationData.status === 'Awaiting Response' &&
                         collaborationData.collaborationSide === 'Offer Service' &&
                         <div class="flex justify-between space-x-4 s">
-                            <div class=" w-1/3 rounded-xl mx-auto flex justify-start">
+                            <div class=" w-2/3 rounded-xl mx-auto flex justify-start">
+                                <div class="mx-10 my-20 w-full">
+                                    <button
+                                            className="w-8/12  bg-red-500 items-center text-white hover:bg-red-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={handleRefuseCollaboration}
+                                        >
+                                            Refuse Collaboration
+                                    </button>
+                                </div>
                                 <div class="mx-10 my-20 w-full">
                                     <button
                                             className="w-8/12  bg-indigo-500 items-center text-white hover:bg-indigo-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                                             type="button"
+                                            onClick={handleAcceptCollaboration}
                                         >
                                             Accept Collaboration
                                     </button>
-                                </div>                                  
+                                </div>                                 
                             </div>
                         </div>
                         }

@@ -157,6 +157,7 @@ const CompanyCollaborationsDashboard = () => {
                                                                 <option value="Ongoing">Ongoing</option>
                                                                 <option value="Awaiting Response">Awaiting Response</option>
                                                                 <option value="Completed">Completed</option>
+                                                                <option value="Refused">Refused</option>
                                             </select> 
                                         </div>
                                         <table class="w-full">

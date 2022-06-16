@@ -334,3 +334,82 @@ exports.proposeFinishCollaboration = async(req,res,next) => {
     }
 }
 
+exports.acceptProposedFinishCollaboration = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+        const [collaboration] = await conn.execute(
+            "SELECT * FROM `collaborations` WHERE id=?",[
+                req.body.collaborationId
+            ]
+        )
+
+        const [collaborationUpdate] = await conn.execute(
+            "UPDATE `collaborations` SET status=?, actualProfitMetric=?, isSuccess=? WHERE id=?",[
+                'Completed',
+                collaboration[0].proposeFinishProfitMetric,
+                collaboration[0].proposeFinishSuccess,
+                req.body.collaborationId
+            ]
+        )
+
+        if(collaborationUpdate.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed inserting collaboration'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Collaboration inserted successfully!'
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+exports.refuseProposedFinishCollaboration = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [collaborationUpdate] = await conn.execute(
+            "UPDATE `collaborations` SET proposeFinishProfitMetric=?, proposeFinishSuccess=?, proposeFinish=? WHERE id=?",[
+                null,
+                null,
+                null,
+                req.body.collaborationId
+            ]
+        )
+
+        if(collaborationUpdate.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed inserting collaboration'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Collaboration inserted successfully!'
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+

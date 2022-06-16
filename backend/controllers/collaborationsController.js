@@ -359,6 +359,27 @@ exports.acceptProposedFinishCollaboration = async(req,res,next) => {
             ]
         )
 
+        const [offerCompany] = await conn.execute(
+            "SELECT * FROM `companies` WHERE id=?",[
+                collaboration[0].offerCompanyId
+            ]
+        )
+
+        var rating;
+        if(collaboration[0].hasDesiredProfit){
+            console.log(collaboration[0].proposeFinishProfitMetric);
+            console.log(collaboration[0].desiredProfitMetric);
+            console.log(offerCompany[0].rating);
+            rating = ((Number(collaboration[0].proposeFinishProfitMetric) / Number(collaboration[0].desiredProfitMetric) * 5.0) + offerCompany[0].rating) / 2.0;
+            const [updateCompany] = await conn.execute(
+                "UPDATE `companies` SET rating=? WHERE id=?",[
+                    rating,
+                    collaboration[0].offerCompanyId
+                ]
+            )
+        }
+
+
         if(collaborationUpdate.affectedRows === 0){
             return res.status(422).json({
                 message: 'Failed inserting collaboration'

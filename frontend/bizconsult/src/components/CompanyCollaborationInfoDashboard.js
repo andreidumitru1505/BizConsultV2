@@ -27,6 +27,19 @@ async function refuseCollaboration(collaborationData) {
       .then(data => data.json())
    }
 
+async function proposeFinishCollaboration(collaborationData) {
+
+    console.log(collaborationData)
+    return fetch('http://localhost:8080/proposeFinishCollaboration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(collaborationData)
+    })
+      .then(data => data.json())
+   }
+
 const CompanyCollaborationInfoDashboard = () => {
     const {state} = useLocation();
 
@@ -38,6 +51,10 @@ const CompanyCollaborationInfoDashboard = () => {
     const [collaborationData, setCollaborationData] = useState();
     const [isLoading, setIsLoading] = useState(1);
     const dummy = 'dummy';
+    const [showModal, setShowModal] = useState(false);
+    const [proposeFinishProfitMetric, setProposeFinishProfitMetric] = useState();
+    const [proposeFinishSuccess, setProposeFinishSuccess] = useState();
+    const [requestCompanyReview, setRequestCompanyReview]= useState()
 
     useEffect(() => {
         fetch('http://localhost:8080/getCollaborationInfo',{
@@ -70,6 +87,20 @@ const CompanyCollaborationInfoDashboard = () => {
         await refuseCollaboration({
             collaborationId,
             dummy
+        });
+
+        navigate("/collaborations", {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId}})
+    }
+
+    const handleProposeFinish = async e => {
+
+        e.preventDefault();
+
+        await proposeFinishCollaboration({
+            collaborationId,
+            requestCompanyReview,
+            proposeFinishSuccess,
+            proposeFinishProfitMetric
         });
 
         navigate("/collaborations", {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId}})
@@ -251,6 +282,81 @@ const CompanyCollaborationInfoDashboard = () => {
                             </div>
                         </div>
                         }
+                        {collaborationData.status === 'Ongoing' &&
+                        collaborationData.collaborationSide === 'Request Service' &&
+                        collaborationData.proposeFinish !== null &&
+                        <div class="flex justify-between space-x-4 s">
+                            <div class=" w-1/3 rounded-xl mx-auto flex justify-start">
+                                <div class="mx-10 my-20 w-full">
+                                    <button
+                                            className="w-8/12  bg-indigo-500 items-center text-white hover:bg-indigo-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={() => setShowModal(true)}
+                                        >
+                                            Finish Collaboration
+                                    </button>
+                                </div>                             
+                            </div>
+                        </div>
+                        }
+                                                
+                        {showModal ? (
+                        <>
+                        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                        <div className="relative w-1/4 my-6 mx-auto max-w-3xl">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                <div className="justify-between border-b border-solid border-slate-200 rounded-t">
+                                    <button
+                                        className="p-1 mr-1 mt-0 text-right bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={() => setShowModal(false)}>
+                                        <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                        ×
+                                        </span>
+                                    </button>
+                                    <h3 className="text-xl ml-5 p-5 font-semibold">
+                                        Enter Collaboration Progress Information
+                                    </h3>
+                                </div>
+                                <div class=" mx-10 bg-white">
+                                    {collaborationData.hasDesiredProfit && 
+                                    <div className="my-10 items-center">
+                                        <label for="name" class="text-gray-800 text-l font-bold">Profit Obtained</label>
+                                        <input id="name" class="mb-5 mt-5  text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" onChange={e => setProposeFinishProfitMetric(e.target.value)}/>
+                                    </div>
+                                    }
+                                    <div class="my-10 items-center">
+                                        <label for="email2" class="text-gray-800 text-l font-bold leading-tight tracking-normal">Would you call your collaboration a success?</label>
+                                        <input type="checkbox" name="floating_last_name" id="floating_last_name" class="mb-5 mt-5  text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder=" " required onChange={e => e.target.value === 'on' ? setProposeFinishSuccess(true) : setProposeFinishSuccess(false)}/>
+                                    </div>
+                                    <div class="my-10 items-center">
+                                        <label for="email2" class="text-gray-800 text-l font-bold leading-tight tracking-normal">Please leave a short review of your collaboration</label>
+                                        <div class=" bg-white">
+                                                <textarea type="text" rows="5" name="floating_email" class="mb-5 mt-5  text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full flex items-center pl-3 text-sm border-gray-300 rounded border" placeholder=" " required onChange={e => setRequestCompanyReview(e.target.value)}>
+                                                </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                    <button
+                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() => setShowModal(false) }>
+                                        Close
+                                    </button>
+                                    <button
+                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={handleProposeFinish}
+                                        >
+                                        Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                        </>
+                        ) : null}
                     </main>
                 </div>
             </div>

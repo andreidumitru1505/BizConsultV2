@@ -179,6 +179,6 @@ router.post('/proposeFinishCollaboration',[
     body('proposeFinishProfitMetric', "Please insert completion profit metric").notEmpty(),
     body('proposeFinishSuccess', "Please insert if collaboration was a success").notEmpty(),
     body('requestCompanyReview', "Please insert your review on the collaboration").notEmpty()
-])
+], proposeFinishCollaboration)
 
 module.exports = router;

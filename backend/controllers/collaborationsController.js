@@ -166,7 +166,10 @@ exports.getCollaborationInfo = async(req,res,next) => {
             desiredProfitMetric: collaborations[0].desiredProfitMetric,
             actualProfitMetric: collaborations[0].actualProfitMetric,
             status: collaborations[0].status,
-            collaborationId: collaborations[0].id
+            collaborationId: collaborations[0].id,
+            proposeFinish: collaborations[0].proposeFinish,
+            proposeFinishProfitMetric: collaborations[0].proposeFinishProfitMetric,
+            proposeFinishSuccess: collaborations[0].proposeFinishSuccess
         }
         
 
@@ -272,6 +275,44 @@ exports.refuseCollaboration = async(req,res,next) => {
         const [collaborationUpdate] = await conn.execute(
             "UPDATE `collaborations` SET status=? WHERE id=?",[
                 'Refused',
+                req.body.collaborationId
+            ]
+        )
+
+        if(collaborationUpdate.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Failed inserting collaboration'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Collaboration inserted successfully!'
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+exports.proposeFinishCollaboration = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [collaborationUpdate] = await conn.execute(
+            "UPDATE `collaborations` SET proposeFinish=?, proposeFinishProfitMetric=?, proposeFinishSuccess=?, requestCompanyReview=? WHERE id=?",[
+                true,
+                req.body.proposeFinishProfitMetric,
+                req.body.proposeFinishSuccess,
+                req.body.requestCompanyReview,
                 req.body.collaborationId
             ]
         )

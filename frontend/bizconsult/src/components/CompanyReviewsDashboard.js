@@ -4,36 +4,41 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
-const CompanyPartnerSearchDashboard = () => {
+const CompanyReviewsDashboard = () => {
     const {state} = useLocation();
 
+    const [requestCompanyName, setRequestCompanyName] = useState();
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
+    const [hasDesiredProfit, setHasDesiredProfit] = useState(false);
+    const [desiredProfitMetric, setDesiredProfitMetric] = useState();
+    const [actualProfitMetric, setActualProfitMetric] = useState();
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [status, setStatus] = useState('Ongoing');
 
-    const autoTransportationString = 'Auto & transportation';
-    const logisticsString = 'Supply chain, logistics, & delivery';
-    const retailString = "Consumer & retail";
-    const ecommerceString = "E-commerce & direct-to-consumer";
 
-    const [companies, setCompanies] = useState();
+    const [reviews, setReviews] = useState();
     const [isLoading, setIsLoading] = useState(1);
     const emailAddress = state.emailAddress;
     const companyId = state.companyId;
     const dummy = 'dummyIndustry';
     const navigate = useNavigate();
-    const [industry,setIndustry] = useState('Artificial Intelligence')
+    const [showModal, setShowModal] = useState();
+    const [refresh, setRefresh] = useState(0);
 
     useEffect(() => {
         console.log(state);
-        fetch('http://localhost:8080/getCompaniesByIndustry',{
+        fetch('http://localhost:8080/getReviews',{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({emailAddress, industry})
+            body: JSON.stringify({companyId, dummy})
         })
             .then(response => response.json())
-            .then(data => {setCompanies(data); setIsLoading(0)})
+            .then(data => {setReviews(data); setIsLoading(0)})
 
-    }, [industry]);
+    }, [refresh, status]);
 
 
     if(isLoading){
@@ -92,7 +97,7 @@ const CompanyPartnerSearchDashboard = () => {
                                             {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: state.companyId, companyName: state.name}})}>
                                             Reviews
                             </button>
-                        </li>                       
+                        </li>
                         </ul>
                     </aside>
                     <main class="flex-col bg-indigo-50 w-full ml-4 pr-6">
@@ -100,90 +105,50 @@ const CompanyPartnerSearchDashboard = () => {
                             <h1 class="text-4xl font-bold text-gray-700">{state.companyName}</h1>
                         </div>
                         <div class="justify-between rounded-xl mt-4 p-4 bg-white shadow-lg">
+                            <h1 class="text-4xl mb-5 mt-5 font-bold text-gray-700">Check out how your partners reviewed your work!</h1>
                             <section class="container mx-auto p-6 font-mono">
-                                <div class=" mb-8 overflow-hidden rounded-lg shadow-lg">
-                                    <div class=" overflow-x-auto">
-                                        <div class="text-center mx-auto mb-10 w-3/12 items-center">
-                                            <label for="cvc" class="text-gray-800 text-sm font-bold leading-tight tracking-normal">Industry</label>
-                                            <select class="mb-5 bg-white mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-semibold w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border" defaultValue='Artificial Intelligence' onChange={e => setIndustry(e.target.value)}>
-                                                                <option value="Artificial intelligence">Artificial intelligence</option>
-                                                                <option value={autoTransportationString}>Auto {'&'} transportation</option>
-                                                                <option value="Edtech">Edtech</option>
-                                                                <option value="Internet Services">Internet Services</option>
-                                                                <option value='Fintech'>Fintech</option>
-                                                                <option value="Hardware">Hardware</option>
-                                                                <option value="Health">Health</option>
-                                                                <option value={logisticsString}>Supply chain, logistics, {'&'} delivery</option>
-                                                                <option value={retailString}>Consumer {'&'} retail</option>
-                                                                <option value={ecommerceString}>E-commerce {'&'} direct-to-consumer</option>
-                                                                <option value="Travel">Travel</option>
-                                                                <option value="Law Consultation">Law Consultation</option>
-                                            </select> 
-                                        </div>
+                                <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+                                    <div class="w-full overflow-x-auto">
                                         <table class="w-full">
                                             <thead>
                                                 <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                    <th class="px-4 py-3">Company</th>
-                                                    <th class="px-4 py-3">Industry</th>
-                                                    <th class="px-4 py-3">Website</th>
-                                                    <th class="px-4 py-3">City</th>
-                                                    <th class="px-4 py-3">Country</th>
-                                                    <th class="px-4 py-3">Rating</th>
-                                                    <th class="px-4 py-3">Actions</th>
+                                                    <th class="px-4 py-3">Collaboration Start Month</th>
+                                                    <th class="px-4 py-3">Collaboration End Month</th>
+                                                    <th class="px-4 py-3">Partner Industry</th>
+                                                    <th class="px-4 py-3">Review</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
                                                 {
-                                                    companies.map((item) => (
+                                                    reviews.map((item) => (
                                                         <tr class="text-gray-700">
                                                             <td class="px-4 py-3 border">
                                                                 <div class=" text-sm">
                                                                     <div>
-                                                                        <p class="font-semibold text-black">{item.name}</p>
+                                                                        <p class="font-semibold text-black">{item.startDate}</p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td class="px-4 py-3 border">
                                                                 <div class=" text-sm">
                                                                     <div>
-                                                                        <p class="font-semibold text-black">{item.industry}</p>
+                                                                        <p class="font-semibold text-black">{item.endDate}</p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td class="px-4 py-3 border">
                                                                 <div class=" text-sm">
                                                                     <div>
-                                                                        <p class="font-semibold text-black">{item.website}</p>
+                                                                        <p class="font-semibold text-black">{item.partnerCompanyIndustry}</p>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td class="px-4 py-3 border">
                                                                 <div class=" text-sm">
                                                                     <div>
-                                                                        <p class="font-semibold text-black">{item.city}</p>
+                                                                        <p class="font-semibold text-black">{item.review}</p>
                                                                     </div>
                                                                 </div>
-                                                            </td>
-                                                            <td class="px-4 py-3 border">
-                                                                <div class=" text-sm">
-                                                                    <div>
-                                                                        <p class="font-semibold text-black">{item.country}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="px-4 py-3 border">
-                                                                <div class=" text-sm">
-                                                                    <div>
-                                                                        <p class="font-semibold text-black">{item.rating}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td class="px-4 py-3 text-xs font-semibold border">
-                                                                <button class="px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
-                                                                    onClick={() => navigate("/partnerCompanyInfo",
-                                                                    {state:{firstName:state.firstName, lastName:state.lastName, emailAddress:state.emailAddress, role:state.role, companyId: companyId, partnerCompanyId: item.companyId, companyName: state.companyName}})}>
-                                                                    <span>See more</span>
-                                                                </button>
                                                             </td>
                                                         </tr>
                                                     ))
@@ -203,4 +168,4 @@ const CompanyPartnerSearchDashboard = () => {
 }
 
 
-export default CompanyPartnerSearchDashboard;
+export default CompanyReviewsDashboard;

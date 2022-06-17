@@ -9,7 +9,7 @@ const { insertCompany, getCompanyDashboardInformation, getCompaniesByIndustry, g
 const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/industryIdeasController')
 const { getExpertDashboardInfo, getOpenApplications, getUnderReviewApplications, getAcceptedApplications, getRejectedApplications } = require('./controllers/expertsController')
 const { reviewApplication, getApplication, updateApplicationNotes, rejectApplication, acceptApplication } = require('./controllers/applicationsController')
-const { insertExternalCollaboration, getCompanyCollaborations, getCollaborationInfo, requestCollaboration, acceptCollaboration, refuseCollaboration, proposeFinishCollaboration, acceptProposedFinishCollaboration, refuseProposedFinishCollaboration } = require('./controllers/collaborationsController')
+const { insertExternalCollaboration, getCompanyCollaborations, getCollaborationInfo, requestCollaboration, acceptCollaboration, refuseCollaboration, proposeFinishCollaboration, acceptProposedFinishCollaboration, refuseProposedFinishCollaboration, getReviews } = require('./controllers/collaborationsController')
 
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
@@ -188,5 +188,9 @@ router.post('/acceptProposedFinishCollaboration',[
 router.post('/refuseProposedFinishCollaboration',[
     body('collaborationId', "Please insert collaboration id").notEmpty()
 ], refuseProposedFinishCollaboration)
+
+router.post('/getReviews',[
+    body('companyId', "Please insert company id").notEmpty()
+], getReviews)
 
 module.exports = router;

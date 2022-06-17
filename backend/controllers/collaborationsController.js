@@ -479,11 +479,22 @@ exports.getReviews = async(req,res,next) => {
             endDateMonth = endDate.getMonth() + 1;
             var parsedEndDate = MONTH_MAP.get(endDateMonth) + ' ' + endDate.getFullYear();
 
-            response.push({
-                startDate: parsedStartDate,
-                endDate: parsedEndDate,
-                review: collaborations[i].requestCompanyReview
-            })
+            if(collaborations[i].requestCompanyReview !== null){
+
+
+                const [requestCompany] = await conn.execute(
+                    "SELECT * FROM `companies` WHERE id=?",[
+                        collaborations[i].requestCompanyId
+                    ]
+                ) 
+
+                response.push({
+                    startDate: parsedStartDate,
+                    endDate: parsedEndDate,
+                    partnerCompanyIndustry: requestCompany[0].industry,
+                    review: collaborations[i].requestCompanyReview
+                })
+            }
         }
 
         res.contentType('application/json')

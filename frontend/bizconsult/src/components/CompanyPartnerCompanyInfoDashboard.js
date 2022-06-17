@@ -31,11 +31,12 @@ const CompanyPartnerCompanyInfoDashboard = () => {
     const [endDate, setEndDate] = useState();
     const [hasDesiredProfit, setHasDesiredProfit] = useState();
     const [desiredProfitMetric, setDesiredProfitMetric] = useState(); 
+    const [reviews, setReviews] = useState();
 
     const [showModal, setShowModal] = useState(false);
+    const [showReviewsModal, setShowReviewsModal] = useState(false);
 
     useEffect(() => {
-        console.log(state);
         fetch('http://localhost:8080/getCompanyInfo',{
             method: 'POST',
             headers:{
@@ -44,7 +45,19 @@ const CompanyPartnerCompanyInfoDashboard = () => {
             body: JSON.stringify({dummy, partnerCompanyId})
         })
             .then(response => response.json())
-            .then(data => {setCompanyInfo(data);console.log(data);setIsLoading(0)})
+            .then(data => {setCompanyInfo(data);})
+
+        var companyId = partnerCompanyId;
+        fetch('http://localhost:8080/getReviews',{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({dummy, companyId})
+            })
+                .then(response => response.json())
+                .then(data => {setReviews(data);setIsLoading(0)})
+        
 
     }, []);
 
@@ -85,7 +98,6 @@ const CompanyPartnerCompanyInfoDashboard = () => {
                         </div>
                         <h1 class="text-white font-bold mr-2 cursor-pointer">BizConsult</h1>
                         </div>
-                        <h1 class="text-white font-bold mr-2 cursor-pointer">Applications</h1>
                         <ul>
                         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -125,7 +137,6 @@ const CompanyPartnerCompanyInfoDashboard = () => {
                             </button>
                         </li>
                         </ul>
-                        <h1 class="text-white font-bold mr-2 cursor-pointer">Settings</h1>
                     </aside>
                     <main class="flex-col bg-indigo-50 w-full ml-4 pr-6 overflow-auto">
                         <div class="flex justify-between mt-4 space-x-4 s">
@@ -256,10 +267,21 @@ const CompanyPartnerCompanyInfoDashboard = () => {
                             </div>
                         </div>
                         <div class="flex justify-between space-x-4 s">
-                            <div class=" w-1/3 rounded-xl mx-auto flex justify-start">
-                                <div class="mx-10 my-20 w-full">
+                            <div class=" w-1/2 rounded-xl mx-auto flex justify-start">
+                                <div class="my-20 w-full">
                                     <button
-                                            className="w-8/12  bg-indigo-500 items-center text-white hover:bg-indigo-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            className="w-5/12  bg-indigo-500 items-center text-white hover:bg-indigo-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
+                                            type="button"
+                                            onClick={() => {setShowReviewsModal(true)}}
+                                        >
+                                            Company Reviews
+                                    </button>
+                                </div>                                  
+                            </div>
+                            <div class=" w-1/2 rounded-xl mx-auto flex justify-start">
+                                <div class="my-20 w-full">
+                                    <button
+                                            className="w-5/12  bg-green-500 items-center text-white hover:bg-green-600 active:bg-pink-600 font-bold uppercase text-sm px-8 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1 ease-linear transition-all duration-150"
                                             type="button"
                                             onClick={() => {setShowModal(true)}}
                                         >
@@ -308,6 +330,85 @@ const CompanyPartnerCompanyInfoDashboard = () => {
                                                             onClick={handleRequestCollaboration}
                                                             >
                                                             Request
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                                        </>
+                                         ) : null}
+                                        {showReviewsModal ? (
+                                        <>
+                                        <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                                            <div className="relative w-full my-6 mx-auto max-w-6xl">
+                                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                                    <div className="border-b border-solid border-slate-200 rounded-t">
+                                                        <button
+                                                            className="p-1 mr-1 mt-0 text-right bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                                            onClick={() => setShowReviewsModal(false)}>
+                                                            <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                                            ×
+                                                            </span>
+                                                        </button>
+                                                        <h3 className="text-xl ml-5 p-7 font-semibold">
+                                                            Reviews of {companyInfo.companyInfo.name} previous partners
+                                                        </h3>
+                                                    </div>
+                                                    <div class="w-full py-10 px-10 items-center">
+                                                        <table>
+                                                            <thead>
+                                                                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                                                                    <th class="px-4 py-3">Collaboration Start Month</th>
+                                                                    <th class="px-4 py-3">Collaboration End Month</th>
+                                                                    <th class="px-4 py-3">Partner Industry</th>
+                                                                    <th class="px-4 py-3">Review</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="bg-white">
+                                                                {
+                                                                    reviews.map((item) => (
+                                                                        <tr class="text-gray-700">
+                                                                            <td class="px-4 py-3 border">
+                                                                                <div class=" text-sm">
+                                                                                    <div>
+                                                                                        <p class="font-semibold text-black">{item.startDate}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="px-4 py-3 border">
+                                                                                <div class=" text-sm">
+                                                                                    <div>
+                                                                                        <p class="font-semibold text-black">{item.endDate}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="px-4 py-3 border">
+                                                                                <div class=" text-sm">
+                                                                                    <div>
+                                                                                        <p class="font-semibold text-black">{item.partnerCompanyIndustry}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td class="px-4 py-3 border">
+                                                                                <div class=" text-sm">
+                                                                                    <div>
+                                                                                        <p class="font-semibold text-black">{item.review}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    ))
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                                                        <button
+                                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                            type="button"
+                                                            onClick={() => setShowReviewsModal(false) }>
+                                                            Close
                                                         </button>
                                                     </div>
                                                 </div>

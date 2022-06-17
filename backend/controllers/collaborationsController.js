@@ -2,6 +2,21 @@ const conn = require('../dbConn').promise();
 const {validationResult} = require('express-validator');
 const dbConn = require('../dbConn');
 
+const MONTH_MAP = new Map([
+    [1, 'January'],
+    [2, 'February'],
+    [3, 'March'],
+    [4, 'April'],
+    [5, 'May'],
+    [6, 'June'],
+    [7, 'July'],
+    [8, 'August'],
+    [9, 'September'],
+    [10, 'October'],
+    [11, 'November'],
+    [12, 'December']
+])
+
 exports.insertExternalCollaboration = async(req,res,next) => {
     const errors = validationResult(req);
     console.log(req.body);
@@ -426,6 +441,53 @@ exports.refuseProposedFinishCollaboration = async(req,res,next) => {
         return res.status(201).json({
             message: 'Collaboration inserted successfully!'
         })
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+exports.getReviews = async(req,res,next) => {
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [collaborations] = await conn.execute(
+            "SELECT * FROM `collaborations` WHERE offerCompanyId=? AND status=? ORDER BY startDate, endDate ASC",[
+                req.body.companyId,
+                'Completed'
+            ]
+        )
+
+        var response=[];
+        for(var i = 0; i < collaborations.length; i++){
+
+
+            startDate = new Date(collaborations[i].startDate);
+            startDateMonth = startDate.getMonth() + 1;
+            var parsedStartDate = MONTH_MAP.get(startDateMonth) + ' ' + startDate.getFullYear();
+
+            endDate = new Date(collaborations[i].endDate);
+            endDateMonth = endDate.getMonth() + 1;
+            var parsedEndDate = MONTH_MAP.get(endDateMonth) + ' ' + endDate.getFullYear();
+
+            response.push({
+                startDate: parsedStartDate,
+                endDate: parsedEndDate,
+                review: collaborations[i].requestCompanyReview
+            })
+        }
+
+        res.contentType('application/json')
+        return res.send(JSON.stringify(response));
 
     }
     catch(err){

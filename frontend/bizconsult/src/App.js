@@ -24,6 +24,7 @@ import CompanyCollaborationInfoDashboard from './components/CompanyCollaboration
 import CompanyPartnerSearchDashboard from './components/CompanyPartnerSearchDashboard';
 import CompanyPartnerCompanyInfoDashboard from './components/CompanyPartnerCompanyInfoDashboard';
 import CompanyReviewsDashboard from './components/CompanyReviewsDashboard';
+import SysAdminDashboard from './components/SysAdminDashboard';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
                 <Route exact path="/partnerSearch" element = {<CompanyPartnerSearchDashboard/>}/>
                 <Route exact path="/partnerCompanyInfo" element = {<CompanyPartnerCompanyInfoDashboard/>}/>
                 <Route exact path="/companyReviews" element = {<CompanyReviewsDashboard/>}/>
+                <Route exact path="/administratorDashboard" element = {<SysAdminDashboard/>}/>
             </Routes>
         </div>
     </div>

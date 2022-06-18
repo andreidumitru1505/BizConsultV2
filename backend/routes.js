@@ -10,7 +10,7 @@ const { getEntrepreneurIdeas, lockInEntrepreneurIdea } = require('./controllers/
 const { getExpertDashboardInfo, getOpenApplications, getUnderReviewApplications, getAcceptedApplications, getRejectedApplications } = require('./controllers/expertsController')
 const { reviewApplication, getApplication, updateApplicationNotes, rejectApplication, acceptApplication } = require('./controllers/applicationsController')
 const { insertExternalCollaboration, getCompanyCollaborations, getCollaborationInfo, requestCollaboration, acceptCollaboration, refuseCollaboration, proposeFinishCollaboration, acceptProposedFinishCollaboration, refuseProposedFinishCollaboration, getReviews } = require('./controllers/collaborationsController')
-const { getSysAdminDashboardInfo } = require('./controllers/systemAdminController')
+const { getSysAdminDashboardInfo, acceptExpert, declineExpert } = require('./controllers/systemAdminController')
 
 router.get('/getEntrepreneurs', getEntrepreneurs);
 
@@ -194,5 +194,13 @@ router.post('/getReviews',[
 ], getReviews)
 
 router.get('/getSysAdminDashboardInfo', getSysAdminDashboardInfo);
+
+router.post('/acceptExpert',[
+    body('expertId', "Please insert expert id").notEmpty()
+], acceptExpert)
+
+router.post('/declineExpert',[
+    body('expertId', "Please insert expert id").notEmpty()
+], declineExpert)
 
 module.exports = router;

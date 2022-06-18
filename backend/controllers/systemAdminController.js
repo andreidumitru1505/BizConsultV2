@@ -59,3 +59,75 @@ exports.getSysAdminDashboardInfo = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.acceptExpert = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [expertUpdate] = await conn.execute(
+            'UPDATE `adminsitrators SET status=? WHERE id=?`',[
+                'Accepted',
+                req.body.expertId
+        ])
+
+        if(expertUpdate.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Expert accepted succesfully!'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Failed accepting expert!'
+        })
+
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}
+
+exports.declineExpert = async (req, res, next) => {
+
+    const errors = validationResult(req);
+    console.log(req.body);
+
+    if(!errors.isEmpty()){
+        
+        return res.status(422).json({ errors: errors.array() });
+    }
+
+    try{
+
+        const [expertUpdate] = await conn.execute(
+            'UPDATE `adminsitrators SET status=? WHERE id=?`',[
+                'Declined',
+                req.body.expertId
+        ])
+
+        if(expertUpdate.affectedRows === 0){
+            return res.status(422).json({
+                message: 'Expert declined succesfully!'
+            })
+        }
+
+        return res.status(201).json({
+            message: 'Failed declining expert!'
+        })
+
+
+    }
+    catch(err){
+        console.log(err);
+        next(err);
+    }
+}

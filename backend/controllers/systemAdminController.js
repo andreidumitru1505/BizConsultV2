@@ -73,7 +73,7 @@ exports.acceptExpert = async (req, res, next) => {
     try{
 
         const [expertUpdate] = await conn.execute(
-            'UPDATE `adminsitrators SET status=? WHERE id=?`',[
+            'UPDATE `administrators` SET status=? WHERE id=?',[
                 'Accepted',
                 req.body.expertId
         ])
@@ -109,7 +109,7 @@ exports.declineExpert = async (req, res, next) => {
     try{
 
         const [expertUpdate] = await conn.execute(
-            'UPDATE `adminsitrators SET status=? WHERE id=?`',[
+            'UPDATE `administrators` SET status=? WHERE id=?',[
                 'Declined',
                 req.body.expertId
         ])

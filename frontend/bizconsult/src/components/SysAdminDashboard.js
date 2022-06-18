@@ -7,11 +7,18 @@ import Navbar from './Navbar';
 const SysAdminDashboard = () => {
     const {state} = useLocation();
 
-    const [entrepreneurInfo, setEntrepreneurInfo] = useState();
-    const [isLoading, setIsLoading] = useState(0);
+    const [adminInfo, setAdminInfo] = useState();
+    const [isLoading, setIsLoading] = useState(1);
     const emailAddress = state.emailAddress;
-    const dummy = 'dummyIndustry';
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        console.log(state);
+        fetch('http://localhost:8080/getSysAdminDashboardInfo')
+            .then(response => response.json())
+            .then(data => {setAdminInfo(data); setIsLoading(0)});
+    }, []);
 
 
     if(isLoading){
@@ -26,11 +33,8 @@ const SysAdminDashboard = () => {
             </div>
             <div class="h-screen">
                 <div class="flex h-5/6 bg-gray-100 rounded-xl m-3 mt-12 shadow-xl">
-                    <aside class="flex px-16 space-y-16 overflow-hidden m-3 pb-4 flex-col items-center justify-center rounded-tl-xl rounded-bl-xl bg-blue-800 shadow-lg">
-                        <div class="flex items-center justify-center p-4 shadow-lg">
-                        <div>
-                            <img src="https://i.imgur.com/c6U7KtF.png" alt="" class="h-8 mb-2" />
-                        </div>
+                    <aside class="flex px-16 space-y-16 overflow-hidden m-3 pb-4 flex-col items-center pt-10 rounded-tl-xl rounded-bl-xl bg-blue-800 shadow-lg">
+                        <div class="flex items-center p-4 shadow-lg">
                         <h1 class="text-white font-bold mr-2 cursor-pointer">BizConsult</h1>
                         </div>
                         <ul>
@@ -46,8 +50,8 @@ const SysAdminDashboard = () => {
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>               
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">0</h1>
-                                    <span class="text-gray-500">Companies Integrated</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{adminInfo.activeCompanies}</h1>
+                                    <span class="text-gray-500">Active Companies</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">
@@ -55,8 +59,8 @@ const SysAdminDashboard = () => {
                                     <path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
                                 </svg>
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">0</h1>
-                                    <span class="text-gray-500">Ideas Generated</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{adminInfo.completedCollaborations}</h1>
+                                    <span class="text-gray-500">Collaborations Completed</span>
                                 </div>
                             </div>
                             <div class="bg-white w-1/3 rounded-xl shadow-lg flex items-center justify-around">
@@ -65,8 +69,8 @@ const SysAdminDashboard = () => {
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
                                 </svg>
                                 <div class="text-center">
-                                    <h1 class="text-4xl font-bold text-gray-800">0</h1>
-                                    <span class="text-gray-500">Profit</span>
+                                    <h1 class="text-4xl font-bold text-gray-800">{adminInfo.entrepreneurs}</h1>
+                                    <span class="text-gray-500">Entrepreneurs Registered</span>
                                 </div>
                             </div>
                         </div>
@@ -74,18 +78,48 @@ const SysAdminDashboard = () => {
                             <section class="container mx-auto p-6 font-mono">
                                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
                                     <div class="w-full overflow-x-auto">
-                                        <h2 class="mb-10 font-mono text-3xl font-bold">Your Companies overview</h2>
+                                        <h2 class="mb-10 font-mono text-3xl font-bold">Experts waiting for your review</h2>
                                         <table class="w-full">
                                             <thead>
                                                 <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                                                    <th class="px-4 py-3">Name</th>
-                                                    <th class="px-4 py-3">Industry</th>
-                                                    <th class="px-4 py-3">Size</th>
-                                                    <th class="px-4 py-3">Status</th>
+                                                    <th class="px-4 py-3">First Name</th>
+                                                    <th class="px-4 py-3">Last Name</th>
+                                                    <th class="px-4 py-3">Email Address</th>
+                                                    <th class="px-4 py-3">Expertise</th>
                                                     <th class="px-4 py-3">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
+                                            {
+                                                    adminInfo.experts.map((item) => (
+                                                        
+                                                        <tr class="text-gray-700">
+                                                            <td class="px-4 py-3 border">
+                                                                <div class="text-sm">
+                                                                    <div>
+                                                                        <p class="font-semibold text-black">{item.firstName}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-4 py-3 text-l font-semibold border">{item.lastName}</td>
+                                                            <td class="px-4 py-3 text-l font-semibold border">{item.emailAddress}</td>
+                                                            <td class="px-4 py-3 text-l font-semibold border">{item.expertField}</td>
+                                                            <td class="px-4 py-3 text-l font-semibold border grid-rows-2">
+                                                                <div class="my-4">
+                                                                    <button class="px-4 py-2 h-10 bg-green-500 w-24 hover:bg-green-600 text-gray-50 rounded-xl mx-auto gap-2 text-l">
+                                                                        <span>Accept</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="my-4">
+                                                                    <button class="px-4 bg-red-500 w-24 h-10 hover:bg-red-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms">
+                                                                        <span>Decline</span>
+                                                                    </button>
+                                                                </div>
+                                                            </td>     
+                                                        </tr>
+                                                    ))
+                                                    
+                                                }
                                             </tbody>
                                         </table>
                                     </div>

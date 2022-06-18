@@ -4,6 +4,28 @@ import {useEffect, useState} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from './Navbar';
 
+async function acceptExpert(expertData) {
+    return fetch('http://localhost:8080/acceptExpert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(expertData)
+    })
+      .then(data => data.json())
+   }
+
+async function declineExpert(expertData) {
+    return fetch('http://localhost:8080/declineExpert', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(expertData)
+    })
+      .then(data => data.json())
+   }
+
 const SysAdminDashboard = () => {
     const {state} = useLocation();
 
@@ -11,6 +33,7 @@ const SysAdminDashboard = () => {
     const [isLoading, setIsLoading] = useState(1);
     const emailAddress = state.emailAddress;
     const navigate = useNavigate();
+    const [refresh, setRefresh] = useState(0);
 
 
     useEffect(() => {
@@ -18,7 +41,7 @@ const SysAdminDashboard = () => {
         fetch('http://localhost:8080/getSysAdminDashboardInfo')
             .then(response => response.json())
             .then(data => {setAdminInfo(data); setIsLoading(0)});
-    }, []);
+    }, [refresh]);
 
 
     if(isLoading){
@@ -106,12 +129,14 @@ const SysAdminDashboard = () => {
                                                             <td class="px-4 py-3 text-l font-semibold border">{item.expertField}</td>
                                                             <td class="px-4 py-3 text-l font-semibold border grid-rows-2">
                                                                 <div class="my-4">
-                                                                    <button class="px-4 py-2 h-10 bg-green-500 w-24 hover:bg-green-600 text-gray-50 rounded-xl mx-auto gap-2 text-l">
+                                                                    <button class="px-4 py-2 h-10 bg-green-500 w-24 hover:bg-green-600 text-gray-50 rounded-xl mx-auto gap-2 text-l"
+                                                                            onClick={() => {acceptExpert({'expertId': item.id, 'dummy': 'dummy'}); refresh === 1 ? setRefresh(0) : setRefresh(1)}}>
                                                                         <span>Accept</span>
                                                                     </button>
                                                                 </div>
                                                                 <div class="my-4">
-                                                                    <button class="px-4 bg-red-500 w-24 h-10 hover:bg-red-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms">
+                                                                    <button class="px-4 bg-red-500 w-24 h-10 hover:bg-red-600 text-gray-50 rounded-xl mx-auto gap-2 text-ms"
+                                                                        onClick={() => {declineExpert({'expertId': item.id, 'dummy': 'dummy'}); refresh === 1 ? setRefresh(0) : setRefresh(1)}}>
                                                                         <span>Decline</span>
                                                                     </button>
                                                                 </div>

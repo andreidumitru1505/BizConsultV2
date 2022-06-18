@@ -38,11 +38,12 @@ exports.submitProfile = async(req,res,next) => {
         }
         else if(req.body.role === constants.EXPERT_ADMIN_ROLE){
             const [newExpertAdmin] = await conn.execute(
-                "INSERT INTO `administrators` (`firstName`,`lastName`, `emailAddress`, `expertField`) VALUES (?,?,?,?)",[
+                "INSERT INTO `administrators` (`firstName`,`lastName`, `emailAddress`, `expertField`, `status`) VALUES (?,?,?,?,?)",[
                     req.body.firstName,
                     req.body.lastName,
                     req.body.emailAddress,
-                    req.body.expertField
+                    req.body.expertField,
+                    'Awaiting Admin Review'
             ]);
     
             if(newExpertAdmin.affectedRows == 0){

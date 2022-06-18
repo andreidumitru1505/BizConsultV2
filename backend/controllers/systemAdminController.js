@@ -29,11 +29,11 @@ exports.getSysAdminDashboardInfo = async (req, res, next) => {
 
         const [inactiveExperts] = await conn.execute(
             'SELECT * FROM `administrators` WHERE status=?',[
-            'Awaiting Admin Review'
+            "Awaiting Admin Review"
         ])
 
         var experts = [];
-        for(var i; i < inactiveExperts.length; i++){
+        for(var i = 0; i < inactiveExperts.length; i++){
             experts.push({
                 id: inactiveExperts[i].id,
                 firstName: inactiveExperts[i].firstName,

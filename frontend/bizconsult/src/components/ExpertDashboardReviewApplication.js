@@ -124,12 +124,8 @@ const ExpertDashboardReviewApplication = () => {
                 <div class="flex h-10/12 bg-gray-100 rounded-xl m-3 mt-12 shadow-xl">
                     <aside class="flex px-16 space-y-16 overflow-hidden m-3 pb-4 flex-col items-center justify-center rounded-tl-xl rounded-bl-xl bg-blue-800 shadow-lg">
                         <div class="flex items-center justify-center p-4 shadow-lg">
-                        <div>
-                            <img src="https://i.imgur.com/c6U7KtF.png" alt="" class="h-8 mb-2" />
-                        </div>
                         <h1 class="text-white font-bold mr-2 cursor-pointer">BizConsult</h1>
                         </div>
-                        <h1 class="text-white font-bold mr-2 cursor-pointer">Applications</h1>
                         <ul>
                         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -140,6 +136,7 @@ const ExpertDashboardReviewApplication = () => {
                                             Dashboard
                             </button>
                         </li>
+                        <h1 class="text-white font-bold mr-2 mt-10 cursor-pointer">Applications</h1>
                         <li class="flex space-x-2 mt-4 px-6 py-4 text-white hover:bg-white hover:text-blue-800 font-bold hover:rounded-br-3xl transition duration-100 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
@@ -177,7 +174,6 @@ const ExpertDashboardReviewApplication = () => {
                             </button>
                         </li>
                         </ul>
-                        <h1 class="text-white font-bold mr-2 cursor-pointer">Settings</h1>
                     </aside>
                     <main class="flex-col bg-indigo-50 w-full ml-4 pr-6 overflow-auto">
                         <div class="flex justify-between mt-4 space-x-4 s">
